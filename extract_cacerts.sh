@@ -31,6 +31,13 @@ function get_alias() {
 }
 
 for certificate in $(ls /etc/ssl/certs/*.pem) ; do
+	if [[ $certificate == /etc/ssl/certs/Autoridad_de_Certificacion_Firmaprofesional_CIF_A62634068_1.pem
+		|| $certificate == /etc/ssl/certs/AC_RAIZ_FNMT-RCM.pem
+	 ]] ; then
+		echo "Skipping $certificate"
+		continue
+	fi
+
 	cert=$($jdk/bin/keytool -printcert -file $certificate)
 	issuer=$(echo "$cert" | grep '^Issuer' | cut -d' ' -f1 --complement)
 	fprint=$(echo "$cert" | grep 'SHA1:' | cut -d' ' -f3)

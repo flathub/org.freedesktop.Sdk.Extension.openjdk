@@ -1,8 +1,8 @@
 ---
 id: org.freedesktop.Sdk.Extension.openjdk
-branch: '21.08'
+branch: "22.08"
 runtime: org.freedesktop.Sdk
-runtime-version: '21.08'
+runtime-version: "22.08"
 build-extension: true
 sdk: org.freedesktop.Sdk
 separate-locales: false
@@ -15,12 +15,12 @@ build-options:
   strip: true
   prefix: /usr/lib/sdk/openjdk
   env:
-    V: '1'
+    V: "1"
 modules:
   - name: bootstrap_jdk
     buildsystem: simple
     cleanup:
-      - '*'
+      - "*"
     sources:
       - type: file
         only-arches:
@@ -90,8 +90,8 @@ modules:
   - name: ant
     buildsystem: simple
     cleanup:
-      - '*.bat'
-      - '*.cmd'
+      - "*.bat"
+      - "*.cmd"
     sources:
       - type: file
         url: http://archive.apache.org/dist/ant/binaries/apache-ant-1.10.12-bin.tar.gz
@@ -104,8 +104,8 @@ modules:
   - name: maven
     buildsystem: simple
     cleanup:
-      - '*.bat'
-      - '*.cmd'
+      - "*.bat"
+      - "*.cmd"
     sources:
       - type: file
         url: http://archive.apache.org/dist/maven/maven-3/3.8.4/binaries/apache-maven-3.8.4-bin.tar.gz
@@ -118,7 +118,7 @@ modules:
   - name: gradle
     buildsystem: simple
     cleanup:
-      - '*.bat'
+      - "*.bat"
     sources:
       - type: file
         url: https://services.gradle.org/distributions/gradle-7.2-bin.zip
