@@ -25,15 +25,15 @@ modules:
       - type: file
         only-arches:
           - x86_64
-        url: https://fedorapeople.org/~mbooth/bootstrap_jdk/bootstrap-openjdk-16.0.1.0.9-1.rolling.fc32.x86_64.tar.bz2
+        url: https://fedorapeople.org/~mbooth/bootstrap_jdk/bootstrap-openjdk-17.0.0.0.35-1.rolling.fc33.x86_64.tar.bz2
         dest-filename: java-openjdk.tar.bz2
-        sha512: 0084f99558a73788438df4fe62700584b41ee962d7de7bd322d8950207c88acfb3839c788def906926325f782ae86068315352dfc3b8c6d5375dec192cf3adeb
+        sha256: c5dae88734c36f8b52219abb3361da15d47bd78bfe28a180724ba474760fdd90
       - type: file
         only-arches:
           - aarch64
-        url: https://fedorapeople.org/~mbooth/bootstrap_jdk/bootstrap-openjdk-16.0.1.0.9-1.rolling.fc32.aarch64.tar.bz2
+        url: https://fedorapeople.org/~mbooth/bootstrap_jdk/bootstrap-openjdk-17.0.0.0.35-1.rolling.fc33.aarch64.tar.bz2
         dest-filename: java-openjdk.tar.bz2
-        sha512: a96e7fc8fdba6bb7a374e2f1f293aca567777b447ae30ac469ef2f38e2704dfa236b54d0d12d66c863f9058d79dd16e5fdffbf22ee1d5d8c7f6e744b3e86e3e4
+        sha256: ab77c9cce958be8cadf5f0182d2d3564ecfd32aaee1f07a49e019574fce63ea1
     build-commands:
       - mkdir -p $FLATPAK_DEST/bootstrap-java
       - tar xf java-openjdk.tar.bz2 --strip-components=4 --directory=$FLATPAK_DEST/bootstrap-java
