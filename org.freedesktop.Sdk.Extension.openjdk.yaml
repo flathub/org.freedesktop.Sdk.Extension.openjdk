@@ -1,8 +1,8 @@
 ---
 id: org.freedesktop.Sdk.Extension.openjdk
-branch: '21.08'
+branch: '22.08'
 runtime: org.freedesktop.Sdk
-runtime-version: '21.08'
+runtime-version: '22.08'
 build-extension: true
 sdk: org.freedesktop.Sdk
 separate-locales: false
@@ -69,11 +69,11 @@ modules:
       - LOG=info
       - images
     post-install:
-      - (cd $FLATPAK_DEST/jvm && ln -s openjdk-17.0.1 openjdk-17)
+      - (cd $FLATPAK_DEST/jvm && ln -s openjdk-19.0.2 openjdk-19)
     sources:
       - type: archive
-        url: https://github.com/openjdk/jdk17u/archive/refs/tags/jdk-17.0.1+12.tar.gz
-        sha512: 220d87a29e1a25b670d721c27069b601a48c833069cb252f81ee6de2ff65fef23fd76e689fc755940f7e457b2419ef93a15cbeca64db2a8798028729df876d25
+        url: https://github.com/openjdk/jdk19u/archive/refs/tags/jdk19u-jdk-19.0.2-7.tar.gz
+        sha512: f25f2fe1f835854bfbe0cfabde092aed3b883a5448b30be5a9e5788e79723bf2f6fca9d41383a99dcd980bed04e7f18cfef3d0f3044b245d32b5cb1ff351eefd
       - type: patch
         path: 0001-Avoid-requiring-pcsc-development-files-at-runtime.patch
       - type: shell
@@ -86,7 +86,7 @@ modules:
       - type: file
         path: extract_cacerts.sh
     build-commands:
-      - ./extract_cacerts.sh $FLATPAK_DEST/jvm/openjdk-17
+      - ./extract_cacerts.sh $FLATPAK_DEST/jvm/openjdk-19
   - name: ant
     buildsystem: simple
     cleanup:
@@ -94,9 +94,9 @@ modules:
       - '*.cmd'
     sources:
       - type: file
-        url: http://archive.apache.org/dist/ant/binaries/apache-ant-1.10.12-bin.tar.gz
+        url: https://dlcdn.apache.org//ant/binaries/apache-ant-1.9.16-bin.tar.gz
         dest-filename: apache-ant-bin.tar.gz
-        sha512: 2287dc5cfc21043c14e5413f9afb1c87c9f266ec2a9ba2d3bf2285446f6e4ccb59b558bf2e5c57911a05dfa293c7d5c7ad60ac9f744ba11406f4e6f9a27b2403
+        sha512: 8d542a7a636a491e76170148881b6f413f4564aad1ab034f426bd946be93382001862bd6c60865aa2b57b39b9633e0181fe8997dd6323123aaf76b410ec4a366
     build-commands:
       - mkdir -p $FLATPAK_DEST/ant
       - tar xf apache-ant-bin.tar.gz --strip-components=1 --directory=$FLATPAK_DEST/ant
@@ -108,9 +108,9 @@ modules:
       - '*.cmd'
     sources:
       - type: file
-        url: http://archive.apache.org/dist/maven/maven-3/3.8.4/binaries/apache-maven-3.8.4-bin.tar.gz
+        url: https://dlcdn.apache.org/maven/maven-3/3.9.1/binaries/apache-maven-3.9.1-bin.tar.gz
         dest-filename: apache-maven-bin.tar.gz
-        sha512: a9b2d825eacf2e771ed5d6b0e01398589ac1bfa4171f36154d1b5787879605507802f699da6f7cfc80732a5282fd31b28e4cd6052338cbef0fa1358b48a5e3c8
+        sha256: 0869a4f71238e3eeec21051d062cfd915d34abe905c9bfebf94cd34578db0be7
     build-commands:
       - mkdir -p $FLATPAK_DEST/maven
       - tar xf apache-maven-bin.tar.gz --strip-components=1 --exclude=jansi-native --directory=$FLATPAK_DEST/maven
@@ -121,9 +121,9 @@ modules:
       - '*.bat'
     sources:
       - type: file
-        url: https://services.gradle.org/distributions/gradle-7.2-bin.zip
+        url: https://downloads.gradle-dn.com/distributions/gradle-8.0.2-bin.zip
         dest-filename: gradle-bin.zip
-        sha256: f581709a9c35e9cb92e16f585d2c4bc99b2b1a5f85d2badbd3dc6bff59e1e6dd
+        sha256: 99379e27c5cef38c655c8f56b5ba29fe28cda278adc44f45461805e47e1a94ed
     build-commands:
       - unzip -q gradle-bin.zip -d $FLATPAK_DEST
       - mv $FLATPAK_DEST/gradle-* $FLATPAK_DEST/gradle
@@ -134,7 +134,7 @@ modules:
       - type: script
         commands:
           - mkdir -p /app/jre/bin
-          - cd /usr/lib/sdk/openjdk/jvm/openjdk-17
+          - cd /usr/lib/sdk/openjdk/jvm/openjdk-19
           - cp -ra conf lib release /app/jre/
           - rm /app/jre/lib/src.zip /app/jre/lib/ct.sym
           - cp -ra bin/{java,keytool,rmiregistry} /app/jre/bin
@@ -142,12 +142,12 @@ modules:
       - type: script
         commands:
           - mkdir -p /app/jdk/
-          - cd /usr/lib/sdk/openjdk/jvm/openjdk-17
+          - cd /usr/lib/sdk/openjdk/jvm/openjdk-19
           - cp -ra bin conf include jmods lib release /app/jdk/
         dest-filename: installjdk.sh
       - type: script
         commands:
-          - export JAVA_HOME=/usr/lib/sdk/openjdk/jvm/openjdk-17
+          - export JAVA_HOME=/usr/lib/sdk/openjdk/jvm/openjdk-19
           - export PATH=$PATH:/usr/lib/sdk/openjdk/bin
         dest-filename: enable.sh
     build-commands:
