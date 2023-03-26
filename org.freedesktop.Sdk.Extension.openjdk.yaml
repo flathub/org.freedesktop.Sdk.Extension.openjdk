@@ -123,7 +123,7 @@ modules:
       - type: file
         url: https://downloads.gradle-dn.com/distributions/gradle-8.0.2-bin.zip
         dest-filename: gradle-bin.zip
-        sha256: 99379e27c5cef38c655c8f56b5ba29fe28cda278adc44f45461805e47e1a94ed
+        sha256: ff7bf6a86f09b9b2c40bb8f48b25fc19cf2b2664fd1d220cd7ab833ec758d0d7
     build-commands:
       - unzip -q gradle-bin.zip -d $FLATPAK_DEST
       - mv $FLATPAK_DEST/gradle-* $FLATPAK_DEST/gradle
