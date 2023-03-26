@@ -1,8 +1,8 @@
-# SDK Extension for OpenJDK 17
+# SDK Extension for OpenJDK 19
 
-This extension contains the OpenJDK 17 Java Runtime Environment (JRE) and Java Developement Kit (JDK).
+This extension contains the OpenJDK 19 Java Runtime Environment (JRE) and Java Developement Kit (JDK).
 
-OpenJDK 17 is the current latest version. This is *not* a long-term support (LTS) version and will be periodically updated as new JDKs are released.
+OpenJDK 19 is the current stable version. This is *not* a long-term support (LTS) version and will be periodically updated as new JDKs are released.
 
 For the current LTS version, see the [OpenJDK 17](https://github.com/flathub/org.freedesktop.Sdk.Extension.openjdk17) extension.
 
@@ -17,7 +17,7 @@ You can bundle the JRE with your Flatpak application by adding this SDK extensio
   "id" : "org.example.MyApp",
   "branch" : "1.0",
   "runtime" : "org.freedesktop.Platform",
-  "runtime-version" : "21.08",
+  "runtime-version" : "22.08",
   "sdk" : "org.freedesktop.Sdk",
   "sdk-extensions" : [ "org.freedesktop.Sdk.Extension.openjdk" ],
   "modules" : [ {
