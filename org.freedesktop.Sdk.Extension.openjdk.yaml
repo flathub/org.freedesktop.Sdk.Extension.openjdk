@@ -72,7 +72,7 @@ modules:
       - (cd $FLATPAK_DEST/jvm && ln -s openjdk-19.0.2 openjdk-19)
     sources:
       - type: archive
-        url: https://github.com/openjdk/jdk19u/archive/refs/tags/jdk19u-jdk-19.0.2-7.tar.gz
+        url: https://codeload.github.com/openjdk/jdk19u/tar.gz/refs/tags/jdk-19.0.2%2B7
         sha512: f25f2fe1f835854bfbe0cfabde092aed3b883a5448b30be5a9e5788e79723bf2f6fca9d41383a99dcd980bed04e7f18cfef3d0f3044b245d32b5cb1ff351eefd
       - type: patch
         path: 0001-Avoid-requiring-pcsc-development-files-at-runtime.patch
