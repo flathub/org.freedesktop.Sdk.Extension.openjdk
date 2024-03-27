@@ -24,23 +24,23 @@ modules:
       - type: file
         only-arches:
           - x86_64
-        url: https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.2%2B13/OpenJDK21U-jdk_x64_linux_hotspot_21.0.2_13.tar.gz
+        url: https://github.com/adoptium/temurin22-binaries/releases/download/jdk-22%2B36/OpenJDK22U-jdk_x64_linux_hotspot_22_36.tar.gz
         dest-filename: java-openjdk.tar.bz2
-        sha512: 691ec4d447933c59696944cdb5d5de86fc1332b2c730dc6624f546c0d30456cb3583d53f38d7531f69195e807092c1d03d923d73d5e6883185cae935db1ed7ce
+        sha512: 5e947106fabe31c3e229aa380cbebe46ca46c544ae3d0c520ed257a217db87938994223b0adab7630d9713fea996f55fb0437368bf6b335b30646870a91adae5
         x-checker-data:
           type: json
-          url: https://api.adoptium.net/v3/assets/latest/21/hotspot?os=linux&architecture=x64&image_type=jdk
+          url: https://api.adoptium.net/v3/assets/latest/22/hotspot?os=linux&architecture=x64&image_type=jdk
           version-query: .[0].version.semver
           url-query: .[0].binary.package.link
       - type: file
         only-arches:
           - aarch64
-        url: https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.2%2B13/OpenJDK21U-jdk_aarch64_linux_hotspot_21.0.2_13.tar.gz
+        url: https://github.com/adoptium/temurin22-binaries/releases/download/jdk-22%2B36/OpenJDK22U-jdk_aarch64_linux_hotspot_22_36.tar.gz
         dest-filename: java-openjdk.tar.bz2
-        sha512: a41a31915ea64cbdae4e9b81057df579d8456a5ca5e224497e862dbb207275f9d84dd91d9c9cce4d81b03d21d3d4305e3276d064ec1e32b6d1f272f157c82f56
+        sha512: 94335b4137b82f8d977c235f1fa91c035b279f5ab9b3cb4e0230f4bc1e1b9346c5b9b5e588b7a28a43b2db4555e09476531548dd9e849ede553ac172f3a19b08
         x-checker-data:
           type: json
-          url: https://api.adoptium.net/v3/assets/latest/21/hotspot?os=linux&architecture=aarch64&image_type=jdk
+          url: https://api.adoptium.net/v3/assets/latest/22/hotspot?os=linux&architecture=aarch64&image_type=jdk
           version-query: .[0].version.semver
           url-query: .[0].binary.package.link
     build-commands:
@@ -52,10 +52,10 @@ modules:
     config-opts:
       - --with-boot-jdk=/usr/lib/sdk/openjdk/bootstrap-java
       - --with-jvm-variants=server
-      - --with-version-build=2
+      - --with-version-build=36
       - --with-version-pre=
       - --with-version-opt=
-      - --with-vendor-version-string=21.9
+      - --with-vendor-version-string=24.3
       - --with-vendor-name=Flathub
       - --with-vendor-url=https://flathub.org
       - --with-vendor-bug-url=https://github.com/flathub/org.freedesktop.Sdk.Extension.openjdk/issues
@@ -80,20 +80,18 @@ modules:
       - LOG=info
       - images
     post-install:
-      - (cd $FLATPAK_DEST/jvm && ln -s openjdk-21.* openjdk-21)
+      - (cd $FLATPAK_DEST/jvm && ln -s openjdk-22.* openjdk-22)
     sources:
       - type: archive
-        url: https://github.com/openjdk/jdk21u/archive/refs/tags/jdk-21.0.2+13.tar.gz
-        sha512: aa087ec261e67a53f7589882481c8c08717d22a7a345091d2368b0a823fcfd5688246b07f17c3d66c6693601dd6749e5689922e9569c481ca0086557dcae2f1d
+        url: https://github.com/openjdk/jdk22u/archive/refs/tags/jdk-22+36.tar.gz
+        sha512: c57919a9077804bd012242cf2222eb5608118e3759037910984c90d9ce23a5e1e5df53270a10b8d187209822bf8b68287b94954d62d35c6fb84a0237a3ec9e20
         x-checker-data:
           type: json
-          url: https://api.adoptium.net/v3/assets/latest/21/hotspot?os=linux&architecture=x64&image_type=jdk
+          url: https://api.adoptium.net/v3/assets/latest/22/hotspot?os=linux&architecture=x64&image_type=jdk
           version-query: .[0].release_name
-          url-query: '"https://github.com/openjdk/jdk21u/archive/refs/tags/" + $version
+          url-query: '"https://github.com/openjdk/jdk22u/archive/refs/tags/" + $version
             + ".tar.gz"'
           is-main-source: true
-      - type: patch
-        path: 0001-Avoid-requiring-pcsc-development-files-at-runtime.patch
       - type: shell
         commands:
           - chmod a+x configure
@@ -104,7 +102,7 @@ modules:
       - type: file
         path: extract_cacerts.sh
     build-commands:
-      - ./extract_cacerts.sh $FLATPAK_DEST/jvm/openjdk-21
+      - ./extract_cacerts.sh $FLATPAK_DEST/jvm/openjdk-22
   - name: ant
     buildsystem: simple
     cleanup:
@@ -150,9 +148,9 @@ modules:
       - '*.bat'
     sources:
       - type: file
-        url: https://services.gradle.org/distributions/gradle-8.5-bin.zip
+        url: https://services.gradle.org/distributions/gradle-8.7-bin.zip
         dest-filename: gradle-bin.zip
-        sha512: c0c07fcee0802cbdf8156475280f961ef9c0d928252642363314e25da69803fd878ab65bdc1647efa5f4b1e9b7f71e6a4daa6946d9f9923628248e9f35e8b14b
+        sha512: ddbd320de140634087904c0d0047b146b9697eb0d054a7eada24d6179b65dbeb2189e1c9def463e4788fa1a7f02a720ab9b7bdcdd9bb529770985283d0e51e1a
         x-checker-data:
           type: json
           url: https://api.github.com/repos/gradle/gradle/releases
@@ -169,7 +167,7 @@ modules:
       - type: script
         commands:
           - mkdir -p /app/jre/bin
-          - cd /usr/lib/sdk/openjdk/jvm/openjdk-21
+          - cd /usr/lib/sdk/openjdk/jvm/openjdk-22
           - cp -ra conf lib release /app/jre/
           - rm /app/jre/lib/src.zip /app/jre/lib/ct.sym
           - cp -ra bin/{java,keytool,rmiregistry} /app/jre/bin
@@ -177,12 +175,12 @@ modules:
       - type: script
         commands:
           - mkdir -p /app/jdk/
-          - cd /usr/lib/sdk/openjdk/jvm/openjdk-21
+          - cd /usr/lib/sdk/openjdk/jvm/openjdk-22
           - cp -ra bin conf include jmods lib release /app/jdk/
         dest-filename: installjdk.sh
       - type: script
         commands:
-          - export JAVA_HOME=/usr/lib/sdk/openjdk/jvm/openjdk-21
+          - export JAVA_HOME=/usr/lib/sdk/openjdk/jvm/openjdk-22
           - export PATH=$PATH:/usr/lib/sdk/openjdk/bin
         dest-filename: enable.sh
     build-commands:
