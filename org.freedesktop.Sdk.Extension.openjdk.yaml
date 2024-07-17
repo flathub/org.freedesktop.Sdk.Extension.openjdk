@@ -24,9 +24,9 @@ modules:
       - type: file
         only-arches:
           - x86_64
-        url: https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.3%2B9/OpenJDK21U-jdk_x64_linux_hotspot_21.0.3_9.tar.gz
+        url: https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.4%2B7/OpenJDK21U-jdk_x64_linux_hotspot_21.0.4_7.tar.gz
         dest-filename: java-openjdk.tar.bz2
-        sha512: cd9e6054989a838004490f6162f6831397e5498033777d90da224f0aa4809e0f5c8a14459e6f30d441fa1238371d7db9718e2c606c38862b803dda824bbdba1f
+        sha512: 7675079ac1ed0c0428f806908b21c58549df7fc18043d26c011e063b58772ddb1c1c9648a46ab7d5204d47c2af5d3f08eace30028113d64e09cadc69c4fd0def
         x-checker-data:
           type: json
           url: https://api.adoptium.net/v3/assets/latest/21/hotspot?os=linux&architecture=x64&image_type=jdk
@@ -83,8 +83,8 @@ modules:
       - (cd $FLATPAK_DEST/jvm && ln -s openjdk-21.* openjdk-21)
     sources:
       - type: archive
-        url: https://github.com/openjdk/jdk21u/archive/refs/tags/jdk-21.0.3+9.tar.gz
-        sha512: 244d6b90c03a1047950915f1a419e67e5cfe201d6e6f45fe34deb52ce1541f9867d21270096dc8b89df5cdae629898d0689f147e2633f1b3318b26fb56cacefb
+        url: https://github.com/openjdk/jdk21u/archive/refs/tags/jdk-21.0.4+7.tar.gz
+        sha512: ca75ec7d7da62dd9a6a6ff5f594da2b314e2e760d36fe6d337915fa3ec94582f6830c4e56686119877d4cefdb6880ba06282887cbf1bf45d387becea2620c6f8
         x-checker-data:
           type: json
           url: https://api.adoptium.net/v3/assets/latest/21/hotspot?os=linux&architecture=x64&image_type=jdk
@@ -148,9 +148,9 @@ modules:
       - '*.bat'
     sources:
       - type: file
-        url: https://services.gradle.org/distributions/gradle-8.8-bin.zip
+        url: https://services.gradle.org/distributions/gradle-8.9-bin.zip
         dest-filename: gradle-bin.zip
-        sha512: 8a213e1bdfd65e8c3f191b4d25e04c71d6a2ce9ae75c8d77db72b2248d16104d71db95d4d4caa41d27d45d0207d4db25b6fde38c9cb5e24b28142e9c41c24b74
+        sha512: 2b518f56b472ca505de7c4c315711bc7837a15cb343edd3e6479777a7d2a93e1a807f339c3b2f121c9be9e5d19bc39e793b322b2f536ed52c67587598eeb653e
         x-checker-data:
           type: json
           url: https://api.github.com/repos/gradle/gradle/releases
