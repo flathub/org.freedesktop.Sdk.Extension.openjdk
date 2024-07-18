@@ -35,9 +35,9 @@ modules:
       - type: file
         only-arches:
           - aarch64
-        url: https://github.com/adoptium/temurin22-binaries/releases/download/jdk-22.0.1%2B8/OpenJDK22U-jdk_aarch64_linux_hotspot_22.0.1_8.tar.gz
+        url: https://github.com/adoptium/temurin22-binaries/releases/download/jdk-22.0.2%2B9/OpenJDK22U-jdk_aarch64_linux_hotspot_22.0.2_9.tar.gz
         dest-filename: java-openjdk.tar.bz2
-        sha512: efbeb6dedcd13450c31ee0899cc8e6a9ece372b3bb781442129595cf5d8353816287f8712b84f5294aaf0bef2fc0453568ed2953c739e4e50b7a4460aa3cf33f
+        sha512: f6db50f3ba1e6a9515685f4cce5221a999ed6b079541824b0ee62d7cc3fec92c8abd3da8f12302fd60975adaced2035d1eb697dcd4830c75d9e722815bf5bbcb
         x-checker-data:
           type: json
           url: https://api.adoptium.net/v3/assets/latest/22/hotspot?os=linux&architecture=aarch64&image_type=jdk
