@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="addon">
+<!-- Copyright 2022-2024 Taylor Smock <tsmock@riverviewtechnologies.com> -->
+  <id>org.freedesktop.Sdk.Extension.openjdk.plugin.openjfx</id>
+  <extends>org.freedesktop.Sdk.Extension.openjdk</extends>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0 WITH OpenJDK-assembly-exception-1.0</project_license>
+  <name>OpenJFX extension for OpenJDK</name>
+  <summary>The latest version of the OpenJFX</summary>
+  <description>
+    <p>
+      This SDK extension allows the building and running of Java-based applications with OpenJFX.
+    </p>
+  </description>
+  <url type="homepage">https://openjfx.io/</url>
+  <url type="bugtracker">https://bugs.openjdk.org/issues/?filter=39543</url>
+  <developer id="org.openjdk">
+    <name>OpenJDK</name>
+  </developer>
+  <provides>
+    <id>org.openjdk.java.openjfx</id>
+  </provides>
+  <releases>
+  </releases>
+</component>

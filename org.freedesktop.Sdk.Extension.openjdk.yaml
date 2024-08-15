@@ -23,7 +23,7 @@ add-extensions:
     no-autodownload: true
     autodelete: true
   org.freedesktop.Sdk.Extension.openjdk.plugins.openjfx:
-    version: '1.0'
+    version: '23.08'
     directory: extensions/openjfx
     bundle: true
     autodelete: true
@@ -114,43 +114,6 @@ modules:
         commands:
           - chmod a+x configure
           - sed -i -e "s|@prefix@|$FLATPAK_DEST|" make/autoconf/spec.gmk.template
-  - name: openjfx
-    buildsystem: simple
-    build-commands:
-      - mkdir -p $FLATPAK_DEST/extensions/openjfx
-      - cp -r ./ $FLATPAK_DEST/extensions/openjfx
-    sources:
-      - type: archive
-        url: https://download2.gluonhq.com/openjfx/18.0.2/openjfx-18.0.2_linux-aarch64_bin-sdk.zip
-        sha256: c5b507b5c6fc1adf8b66591e79c6c34b6afa78b5cb4c2f1c6cb200f8940b402c
-        only-arches: [aarch64]
-        x-checker-data:
-          type: anitya
-          project-id: 176095
-          stable-only: true
-          url-template: https://download2.gluonhq.com/openjfx/$major.$minor.$patch/openjfx-$major.$minor.${patch}_linux-aarch64_bin-sdk.zip
-          versions: {<: 19.0.0, '>=': 18.0.0, '!=': 18.0.2+0}
-      - type: archive
-        url: https://download2.gluonhq.com/openjfx/18.0.2/openjfx-18.0.2_linux-x64_bin-sdk.zip
-        sha256: e9d4b119efc65f5a9ca7f6a4ca74b579eb212f7126f91d5f4033fd90f74d1701
-        only-arches: [x86_64]
-        x-checker-data:
-          type: anitya
-          project-id: 176095
-          stable-only: true
-          url-template: https://download2.gluonhq.com/openjfx/$major.$minor.$patch/openjfx-$major.$minor.${patch}_linux-x64_bin-sdk.zip
-          versions: {<: 19.0.0, '>=': 18.0.0, '!=': 18.0.2+0}
-      - type: archive
-        url: https://download2.gluonhq.com/openjfx/18.0.2/openjfx-18.0.2_linux-arm32_bin-sdk.zip
-        sha256: d8a28a81ac18cd4f4485a502d2ba0f5a31828fe43cfa376e699cddc66aa9429a
-        only-arches: [arm]
-        x-checker-data:
-          type: anitya
-          project-id: 176095
-          stable-only: true
-          url-template: https://download2.gluonhq.com/openjfx/$major.$minor.$patch/openjfx-$major.$minor.${patch}_linux-arm32_bin-sdk.zip
-          versions: {<: 19.0.0, '>=': 18.0.0, '!=': 18.0.2+0}
-
   - name: cacerts
     buildsystem: simple
     sources:
@@ -216,6 +179,48 @@ modules:
       - unzip -q gradle-bin.zip -d $FLATPAK_DEST
       - mv $FLATPAK_DEST/gradle-* $FLATPAK_DEST/gradle
       - ln -s $FLATPAK_DEST/gradle/bin/gradle $FLATPAK_DEST/bin
+  - name: openjfx
+    buildsystem: simple
+    build-commands:
+      - mkdir -p $FLATPAK_DEST/extensions/openjfx
+      - cp -r ./ $FLATPAK_DEST/extensions/openjfx
+      - ls .
+      - ls $FLATPAK_DEST/extensions/openjfx
+      - echo 'DROP THIS -- for cache busting'
+      - echo $FLATPAK_DEST
+      - echo $(pwd)
+    sources:
+      - type: archive
+        url: https://download2.gluonhq.com/openjfx/18.0.2/openjfx-18.0.2_linux-aarch64_bin-sdk.zip
+        sha256: c5b507b5c6fc1adf8b66591e79c6c34b6afa78b5cb4c2f1c6cb200f8940b402c
+        only-arches: [aarch64]
+        x-checker-data:
+          type: anitya
+          project-id: 176095
+          stable-only: true
+          url-template: https://download2.gluonhq.com/openjfx/$major.$minor.$patch/openjfx-$major.$minor.${patch}_linux-aarch64_bin-sdk.zip
+          versions: {<: 19.0.0, '>=': 18.0.0, '!=': 18.0.2+0}
+      - type: archive
+        url: https://download2.gluonhq.com/openjfx/18.0.2/openjfx-18.0.2_linux-x64_bin-sdk.zip
+        sha256: e9d4b119efc65f5a9ca7f6a4ca74b579eb212f7126f91d5f4033fd90f74d1701
+        only-arches: [x86_64]
+        x-checker-data:
+          type: anitya
+          project-id: 176095
+          stable-only: true
+          url-template: https://download2.gluonhq.com/openjfx/$major.$minor.$patch/openjfx-$major.$minor.${patch}_linux-x64_bin-sdk.zip
+          versions: {<: 19.0.0, '>=': 18.0.0, '!=': 18.0.2+0}
+      - type: archive
+        url: https://download2.gluonhq.com/openjfx/18.0.2/openjfx-18.0.2_linux-arm32_bin-sdk.zip
+        sha256: d8a28a81ac18cd4f4485a502d2ba0f5a31828fe43cfa376e699cddc66aa9429a
+        only-arches: [arm]
+        x-checker-data:
+          type: anitya
+          project-id: 176095
+          stable-only: true
+          url-template: https://download2.gluonhq.com/openjfx/$major.$minor.$patch/openjfx-$major.$minor.${patch}_linux-arm32_bin-sdk.zip
+          versions: {<: 19.0.0, '>=': 18.0.0, '!=': 18.0.2+0}
+
   - name: scripts
     buildsystem: simple
     sources:
@@ -245,6 +250,9 @@ modules:
     sources:
       - type: file
         path: org.freedesktop.Sdk.Extension.openjdk.metainfo.xml
+      - type: file
+        path: org.freedesktop.Sdk.Extension.openjdk.plugins.openjfx.metainfo.xml
     build-commands:
       - mkdir -p ${FLATPAK_DEST}/share/metainfo
       - cp org.freedesktop.Sdk.Extension.openjdk.metainfo.xml ${FLATPAK_DEST}/share/metainfo
+      - cp org.freedesktop.Sdk.Extension.openjdk.plugins.openjfx.metainfo.xml ${FLATPAK_DEST}/share/metainfo
