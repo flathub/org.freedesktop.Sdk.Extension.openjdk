@@ -20,7 +20,7 @@ add-extensions:
   org.freedesktop.Sdk.Extension.openjdk.plugins:
     directory: extensions
     subdirectories: true
-    no-autodownload: true
+    no-autodownload: false # This should change to true sometime
     autodelete: true
   org.freedesktop.Sdk.Extension.openjdk.plugins.openjfx:
     version: '23.08'
@@ -28,6 +28,25 @@ add-extensions:
     bundle: true
     autodelete: true
     no-autodownload: true
+  org.freedesktop.Sdk.Extension.openjdk.plugins.maven:
+    version: '23.08'
+    directory: extensions/maven
+    bundle: true
+    autodelete: true
+    no-autodownload: false
+  org.freedesktop.Sdk.Extension.openjdk.plugins.gradle:
+    version: '23.08'
+    directory: extensions/gradle
+    bundle: true
+    autodelete: true
+    no-autodownload: false
+  org.freedesktop.Sdk.Extension.openjdk.plugins.ant:
+    version: '23.08'
+    directory: extensions/ant
+    bundle: true
+    autodelete: true
+    no-autodownload: false
+  
 cleanup-commands:
   - mkdir --parents /usr/lib/sdk/openjdk/extensions
 modules:
@@ -137,9 +156,9 @@ modules:
           stable-only: true
           url-template: http://archive.apache.org/dist/ant/binaries/apache-ant-$version-bin.tar.gz
     build-commands:
-      - mkdir -p $FLATPAK_DEST/ant
-      - tar xf apache-ant-bin.tar.gz --strip-components=1 --directory=$FLATPAK_DEST/ant
-      - ln -s $FLATPAK_DEST/ant/bin/ant $FLATPAK_DEST/bin
+      - mkdir -p $FLATPAK_DEST/extensions/ant
+      - tar xf apache-ant-bin.tar.gz --strip-components=1 --directory=$FLATPAK_DEST/extensions/ant
+        #- ln -s $FLATPAK_DEST/extensions/ant/bin/ant $FLATPAK_DEST/bin
   - name: maven
     buildsystem: simple
     cleanup:
@@ -156,10 +175,10 @@ modules:
           stable-only: true
           url-template: http://archive.apache.org/dist/maven/maven-3/$version/binaries/apache-maven-$version-bin.tar.gz
     build-commands:
-      - mkdir -p $FLATPAK_DEST/maven
+      - mkdir -p $FLATPAK_DEST/extensions/maven
       - tar xf apache-maven-bin.tar.gz --strip-components=1 --exclude=jansi-native
-        --directory=$FLATPAK_DEST/maven
-      - ln -s $FLATPAK_DEST/maven/bin/mvn $FLATPAK_DEST/maven/bin/mvnDebug $FLATPAK_DEST/bin
+        --directory=$FLATPAK_DEST/extensions/maven
+        #- ln -s $FLATPAK_DEST/extensions/maven/bin/mvn $FLATPAK_DEST/maven/bin/mvnDebug $FLATPAK_DEST/bin
   - name: gradle
     buildsystem: simple
     cleanup:
@@ -177,18 +196,17 @@ modules:
             + "-bin.zip"][0]'
     build-commands:
       - unzip -q gradle-bin.zip -d $FLATPAK_DEST
-      - mv $FLATPAK_DEST/gradle-* $FLATPAK_DEST/gradle
-      - ln -s $FLATPAK_DEST/gradle/bin/gradle $FLATPAK_DEST/bin
+      - mkdir --parents $FLATPAK_DEST/extensions/gradle
+      - mv $FLATPAK_DEST/gradle-*/* $FLATPAK_DEST/extensions/gradle
+        #- ln -s $FLATPAK_DEST/extensions/gradle/bin/gradle $FLATPAK_DEST/bin
   - name: openjfx
     buildsystem: simple
     build-commands:
+      - find /usr -iname '*jfx*'
       - mkdir -p $FLATPAK_DEST/extensions/openjfx
       - cp -r ./ $FLATPAK_DEST/extensions/openjfx
-      - ls .
-      - ls $FLATPAK_DEST/extensions/openjfx
-      - echo 'DROP THIS -- for cache busting'
-      - echo $FLATPAK_DEST
-      - echo $(pwd)
+      - find /usr -iname '*jfx*'
+      - echo 'DROP THIS -- for cache busting2'
     sources:
       - type: archive
         url: https://download2.gluonhq.com/openjfx/18.0.2/openjfx-18.0.2_linux-aarch64_bin-sdk.zip
@@ -231,17 +249,41 @@ modules:
           - cp -ra conf lib release /app/jre/
           - rm /app/jre/lib/src.zip /app/jre/lib/ct.sym
           - cp -ra bin/{java,keytool,rmiregistry} /app/jre/bin
+          - if [ -d '/usr/lib/sdk/openjdk/extensions/openjfx' ]; then
+          -    cp -ra /usr/lib/sdk/openjdk/extensions/openjfx/lib/ /app/share/openjfx/lib
+          - elif [ -d '/usr/lib/sdk/openjdk.plugins.openjfx' ]; then
+          -    cp -ra /usr/lib/sdk/openjdk.plugins.openjfx/lib/ /app/share/openjfx/lib
+          - fi
         dest-filename: install.sh
       - type: script
         commands:
           - mkdir -p /app/jdk/
           - cd /usr/lib/sdk/openjdk/jvm/openjdk-23
           - cp -ra bin conf include jmods lib release /app/jdk/
+          - for i in "ant" "gradle" "maven" "openjfx"; do
+          - if [ -d "/usr/lib/sdk/openjdk/extensions/${i}" ]; then
+          -    cp -ra "/usr/lib/sdk/openjdk/extensions/${i}/" "/app/jdk/${i}"
+          - elif [ -d "/usr/lib/sdk/openjdk.plugins.${i}" ]; then
+          -    cp -ra "/usr/lib/sdk/openjdk.plugins.${i}/" "/app/jdk/${i}"
+          - fi
+          - done
         dest-filename: installjdk.sh
       - type: script
         commands:
           - export JAVA_HOME=/usr/lib/sdk/openjdk/jvm/openjdk-23
           - export PATH=$PATH:/usr/lib/sdk/openjdk/bin
+          - for i in "ant" "gradle" "maven"; do
+          - if [ -d "/usr/lib/sdk/openjdk/extensions/${i}" ]; then
+          -    export PATH="${PATH}:/usr/lib/sdk/openjdk/extensions/${i}/bin"
+          - elif [ -d "/usr/lib/sdk/openjdk.plugins.${i}" ]; then
+          -    export PATH="${PATH}:/usr/lib/sdk/openjdk.plugins.${i}/bin"
+          - fi
+          - if [ -d '/usr/lib/sdk/openjdk/extensions/openjfx' ]; then
+          -    export JAVAFX_HOME="/usr/lib/sdk/openjdk/extensions/openjfx/lib"
+          - elif [ -d '/usr/lib/sdk/openjdk.plugins.openjfx' ]; then
+          -    export JAVAFX_HOME="/usr/lib/sdk/openjdk.plugins.openjfx/lib"
+          - fi
+          - done
         dest-filename: enable.sh
     build-commands:
       - cp enable.sh install.sh installjdk.sh /usr/lib/sdk/openjdk/
@@ -250,6 +292,12 @@ modules:
     sources:
       - type: file
         path: org.freedesktop.Sdk.Extension.openjdk.metainfo.xml
+      - type: file
+        path: org.freedesktop.Sdk.Extension.openjdk.plugins.ant.metainfo.xml
+      - type: file
+        path: org.freedesktop.Sdk.Extension.openjdk.plugins.gradle.metainfo.xml
+      - type: file
+        path: org.freedesktop.Sdk.Extension.openjdk.plugins.maven.metainfo.xml
       - type: file
         path: org.freedesktop.Sdk.Extension.openjdk.plugins.openjfx.metainfo.xml
     build-commands:

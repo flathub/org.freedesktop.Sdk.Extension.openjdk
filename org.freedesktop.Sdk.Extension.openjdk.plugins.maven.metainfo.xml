@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="addon">
+<!-- Copyright 2022-2024 Taylor Smock <tsmock@riverviewtechnologies.com> -->
+  <id>org.freedesktop.Sdk.Extension.openjdk.plugin.maven</id>
+  <extends>org.freedesktop.Sdk.Extension.openjdk</extends>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>Apache-2.0</project_license>
+  <name>maven extension for OpenJDK</name>
+  <summary>The latest version of maven</summary>
+  <description>
+    <p>
+      This SDK extension allows the building and running of Java-based applications with maven.
+    </p>
+  </description>
+  <url type="homepage">https://maven.apache.org</url>
+  <url type="bugtracker">https://maven.apache.org/issue-management.html</url>
+  <developer id="org.apache.maven">
+    <name>Apache Maven</name>
+  </developer>
+  <provides>
+    <binary>mvn</binary>
+    <binary>mvnDebug</binary>
+  </provides>
+  <releases>
+  </releases>
+</component>

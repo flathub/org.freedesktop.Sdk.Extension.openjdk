@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="addon">
+<!-- Copyright 2022-2024 Taylor Smock <tsmock@riverviewtechnologies.com> -->
+  <id>org.freedesktop.Sdk.Extension.openjdk.plugin.gradle</id>
+  <extends>org.freedesktop.Sdk.Extension.openjdk</extends>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>Apache-2.0</project_license>
+  <name>gradle extension for OpenJDK</name>
+  <summary>The latest version of gradle</summary>
+  <description>
+    <p>
+      This SDK extension allows the building and running of Java-based applications with gradle.
+    </p>
+  </description>
+  <url type="homepage">https://gradle.org/</url>
+  <url type="bugtracker">https://github.com/gradle/gradle/issues</url>
+  <developer id="org.gradle">
+    <name>Gradle</name>
+  </developer>
+  <provides>
+    <binary>gradle</binary>
+  </provides>
+  <releases>
+  </releases>
+</component>
