@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<component type="addon">
 <!-- Copyright 2018-2021 Mat Booth <mat.booth@gmail.com> -->
-<component type="runtime">
+<!-- Copyright 2022-2024 Taylor Smock <tsmock@riverviewtechnologies.com> -->
   <id>org.freedesktop.Sdk.Extension.openjdk</id>
+  <extends>org.freedesktop.Sdk</extends>
   <metadata_license>CC0-1.0</metadata_license>
-  <project_license>0BSD AND Apache-1.1 AND Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND FTL AND GPL-2.0 AND GPL-2.0-with-classpath-exception AND IJG AND ISC AND LGPL-2.1-or-later AND MIT AND MPL-2.0 AND RSA-MD AND SAX-PD AND W3C AND Zlib</project_license>
+  <project_license>0BSD AND Apache-1.1 AND Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND FTL AND GPL-2.0 WITH OpenJDK-assembly-exception-1.0 AND IJG AND ISC AND LGPL-2.1-or-later AND MIT AND MPL-2.0 AND RSA-MD AND SAX-PD AND W3C AND Zlib</project_license>
   <name>OpenJDK SDK Extension</name>
   <summary>The latest version of the OpenJDK JRE and JDK</summary>
   <description>
@@ -13,8 +15,82 @@
   </description>
   <url type="homepage">https://openjdk.java.net/</url>
   <url type="bugtracker">https://bugs.openjdk.java.net/</url>
-  <developer_name>Mat Booth</developer_name>
-  <update_contact>mat.booth@gmail.com</update_contact>
+  <developer id="org.openjdk">
+    <name>OpenJDK</name>
+  </developer>
+  <provides>
+    <id>org.openjdk.java</id>
+    <binary>jshell</binary>
+    <binary>javac</binary>
+    <binary>java</binary>
+    <binary>jshell</binary>
+    <binary>jar</binary>
+    <binary>jarsigner</binary>
+    <binary>javadoc</binary>
+    <binary>javap</binary>
+    <binary>jcmd</binary>
+    <binary>jconsole</binary>
+    <binary>jdb</binary>
+    <binary>jdeprscan</binary>
+    <binary>jdeps</binary>
+    <binary>jfr</binary>
+    <binary>jhsdb</binary>
+    <binary>jimage</binary>
+    <binary>jinfo</binary>
+    <binary>jlink</binary>
+    <binary>jmap</binary>
+    <binary>jmod</binary>
+    <binary>jpackage</binary>
+    <binary>jps</binary>
+    <binary>jrunscript</binary>
+    <binary>jstack</binary>
+    <binary>jstat</binary>
+    <binary>jstatd</binary>
+    <binary>jwebserver</binary>
+    <binary>keytool</binary>
+    <binary>rmiregistry</binary>
+    <binary>serialver</binary>
+    <library>libj2pkcs11.so</library>
+    <library>libsctp.so</library>
+    <library>libjimage.so</library>
+    <library>libjvm.so</library>
+    <library>libjsig.so</library>
+    <library>libawt.so</library>
+    <library>libawt_xawt.so</library>
+    <library>libjava.so</library>
+    <library>libsaproc.so</library>
+    <library>libzip.so</library>
+    <library>libjsvml.so</library>
+    <library>libinstrument.so</library>
+    <library>libjaas.so</library>
+    <library>libprefs.so</library>
+    <library>libfontmanager.so</library>
+    <library>libj2pcsc.so</library>
+    <library>libatk-wrapper.so</library>
+    <library>libjli.so</library>
+    <library>libsplashscreen.so</library>
+    <library>libverify.so</library>
+    <library>libjavajpeg.so</library>
+    <library>librmi.so</library>
+    <library>libjsig.so</library>
+    <library>libsyslookup.so</library>
+    <library>libj2gss.so</library>
+    <library>libextnet.so</library>
+    <library>libdt_socket.so</library>
+    <library>lible.so</library>
+    <library>liblcms.so</library>
+    <library>libmlib_image.so</library>
+    <library>libattach.so</library>
+    <library>libmanagement.so</library>
+    <library>libjdwp.so</library>
+    <library>libmanagement_agent.so</library>
+    <library>libawt_headless.so</library>
+    <library>libnet.so</library>
+    <library>libjawt.so</library>
+    <library>libjsound.so</library>
+    <library>libmanagement_ext.so</library>
+    <library>libnio.so</library>
+  </provides>
   <releases>
     <release version="jdk-23.0.1+11" date="2024-10-31">
       <description></description>

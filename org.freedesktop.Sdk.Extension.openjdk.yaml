@@ -12,8 +12,24 @@ build-options:
   no-debuginfo: true
   strip: true
   prefix: /usr/lib/sdk/openjdk
+  prepend-path: /usr/lib/sdk/openjdk/jvm/openjdk-22/bin
+  prepend-ld-library-path: /usr/lib/sdk/openjdk/jvm/openjdk-22/lib
   env:
     V: '1'
+add-extensions:
+  org.freedesktop.Sdk.Extension.openjdk.plugins:
+    directory: extensions
+    subdirectories: true
+    no-autodownload: true
+    autodelete: true
+  org.freedesktop.Sdk.Extension.openjdk.plugins.openjfx:
+    version: '1.0'
+    directory: extensions/openjfx
+    bundle: true
+    autodelete: true
+    no-autodownload: true
+cleanup-commands:
+  - mkdir --parents /usr/lib/sdk/openjdk/extensions
 modules:
   - name: bootstrap_jdk
     buildsystem: simple
@@ -98,6 +114,43 @@ modules:
         commands:
           - chmod a+x configure
           - sed -i -e "s|@prefix@|$FLATPAK_DEST|" make/autoconf/spec.gmk.template
+  - name: openjfx
+    buildsystem: simple
+    build-commands:
+      - mkdir -p $FLATPAK_DEST/extensions/openjfx
+      - cp -r ./ $FLATPAK_DEST/extensions/openjfx
+    sources:
+      - type: archive
+        url: https://download2.gluonhq.com/openjfx/18.0.2/openjfx-18.0.2_linux-aarch64_bin-sdk.zip
+        sha256: c5b507b5c6fc1adf8b66591e79c6c34b6afa78b5cb4c2f1c6cb200f8940b402c
+        only-arches: [aarch64]
+        x-checker-data:
+          type: anitya
+          project-id: 176095
+          stable-only: true
+          url-template: https://download2.gluonhq.com/openjfx/$major.$minor.$patch/openjfx-$major.$minor.${patch}_linux-aarch64_bin-sdk.zip
+          versions: {<: 19.0.0, '>=': 18.0.0, '!=': 18.0.2+0}
+      - type: archive
+        url: https://download2.gluonhq.com/openjfx/18.0.2/openjfx-18.0.2_linux-x64_bin-sdk.zip
+        sha256: e9d4b119efc65f5a9ca7f6a4ca74b579eb212f7126f91d5f4033fd90f74d1701
+        only-arches: [x86_64]
+        x-checker-data:
+          type: anitya
+          project-id: 176095
+          stable-only: true
+          url-template: https://download2.gluonhq.com/openjfx/$major.$minor.$patch/openjfx-$major.$minor.${patch}_linux-x64_bin-sdk.zip
+          versions: {<: 19.0.0, '>=': 18.0.0, '!=': 18.0.2+0}
+      - type: archive
+        url: https://download2.gluonhq.com/openjfx/18.0.2/openjfx-18.0.2_linux-arm32_bin-sdk.zip
+        sha256: d8a28a81ac18cd4f4485a502d2ba0f5a31828fe43cfa376e699cddc66aa9429a
+        only-arches: [arm]
+        x-checker-data:
+          type: anitya
+          project-id: 176095
+          stable-only: true
+          url-template: https://download2.gluonhq.com/openjfx/$major.$minor.$patch/openjfx-$major.$minor.${patch}_linux-arm32_bin-sdk.zip
+          versions: {<: 19.0.0, '>=': 18.0.0, '!=': 18.0.2+0}
+
   - name: cacerts
     buildsystem: simple
     sources:
@@ -191,7 +244,7 @@ modules:
     buildsystem: simple
     sources:
       - type: file
-        path: org.freedesktop.Sdk.Extension.openjdk.appdata.xml
+        path: org.freedesktop.Sdk.Extension.openjdk.metainfo.xml
     build-commands:
       - mkdir -p ${FLATPAK_DEST}/share/metainfo
-      - cp org.freedesktop.Sdk.Extension.openjdk.appdata.xml ${FLATPAK_DEST}/share/metainfo
+      - cp org.freedesktop.Sdk.Extension.openjdk.metainfo.xml ${FLATPAK_DEST}/share/metainfo
