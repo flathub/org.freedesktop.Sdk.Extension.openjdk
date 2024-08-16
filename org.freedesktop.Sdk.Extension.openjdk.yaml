@@ -11,8 +11,10 @@ cleanup:
 build-options:
   no-debuginfo: true
   strip: true
+  build-args:
+    - --share=network # Needed to build jdt-language-server (lots of maven dependencies)
   prefix: /usr/lib/sdk/openjdk
-  prepend-path: /usr/lib/sdk/openjdk/jvm/openjdk-22/bin
+  prepend-path: /usr/lib/sdk/openjdk/jvm/openjdk-22/bin:/usr/lib/sdk/openjdk/extensions/maven/bin
   prepend-ld-library-path: /usr/lib/sdk/openjdk/jvm/openjdk-22/lib
   env:
     V: '1'
@@ -46,6 +48,12 @@ add-extensions:
     bundle: true
     autodelete: true
     no-autodownload: false
+  org.freedesktop.Sdk.Extension.openjdk.plugins.jdt-language-server:
+    version: '23.08'
+    directory: extensions/jdt-language-server
+    bundle: true
+    autodelete: true
+    no-autodownload: true
   
 cleanup-commands:
   - mkdir --parents /usr/lib/sdk/openjdk/extensions
@@ -202,11 +210,8 @@ modules:
   - name: openjfx
     buildsystem: simple
     build-commands:
-      - find /usr -iname '*jfx*'
       - mkdir -p $FLATPAK_DEST/extensions/openjfx
       - cp -r ./ $FLATPAK_DEST/extensions/openjfx
-      - find /usr -iname '*jfx*'
-      - echo 'DROP THIS -- for cache busting2'
     sources:
       - type: archive
         url: https://download2.gluonhq.com/openjfx/18.0.2/openjfx-18.0.2_linux-aarch64_bin-sdk.zip
@@ -287,6 +292,22 @@ modules:
         dest-filename: enable.sh
     build-commands:
       - cp enable.sh install.sh installjdk.sh /usr/lib/sdk/openjdk/
+  - name: jdt-language-server
+    buildsystem: simple
+    build-commands:
+      - source /usr/lib/sdk/openjdk/enable.sh
+      - echo $PATH
+      - mvn clean verify -DskipTests=true
+      - mkdir -p $FLATPAK_DEST/extensions/jdt-language-server
+      - cp -r ./org.eclipse.jdt.ls.product/target/repository/* $FLATPAK_DEST/extensions/jdt-language-server
+    sources:
+      - type: git
+        url: https://github.com/eclipse-jdtls/eclipse.jdt.ls.git
+        commit: 494042b71bb5b23578d58c44969863117b648b75
+        x-checker-data:
+          type: git
+          tag-pattern: "^v([\\d.]+)$"
+
   - name: appdata
     buildsystem: simple
     sources:
