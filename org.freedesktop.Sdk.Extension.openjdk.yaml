@@ -25,31 +25,31 @@ add-extensions:
     no-autodownload: false # This should change to true sometime
     autodelete: true
   org.freedesktop.Sdk.Extension.openjdk.plugins.openjfx:
-    version: '23.08'
+    version: '24.08'
     directory: extensions/openjfx
     bundle: true
     autodelete: true
     no-autodownload: true
   org.freedesktop.Sdk.Extension.openjdk.plugins.maven:
-    version: '23.08'
+    version: '24.08'
     directory: extensions/maven
     bundle: true
     autodelete: true
     no-autodownload: false
   org.freedesktop.Sdk.Extension.openjdk.plugins.gradle:
-    version: '23.08'
+    version: '24.08'
     directory: extensions/gradle
     bundle: true
     autodelete: true
     no-autodownload: false
   org.freedesktop.Sdk.Extension.openjdk.plugins.ant:
-    version: '23.08'
+    version: '24.08'
     directory: extensions/ant
     bundle: true
     autodelete: true
     no-autodownload: false
   org.freedesktop.Sdk.Extension.openjdk.plugins.jdt-language-server:
-    version: '23.08'
+    version: '24.08'
     directory: extensions/jdt-language-server
     bundle: true
     autodelete: true
