@@ -23,9 +23,9 @@ modules:
       - type: file
         only-arches:
           - x86_64
-        url: https://github.com/adoptium/temurin23-binaries/releases/download/jdk-23%2B37/OpenJDK23U-jdk_x64_linux_hotspot_23_37.tar.gz
+        url: https://github.com/adoptium/temurin23-binaries/releases/download/jdk-23.0.1%2B11/OpenJDK23U-jdk_x64_linux_hotspot_23.0.1_11.tar.gz
         dest-filename: java-openjdk.tar.bz2
-        sha512: 99bcd5081a17a533075ccec654d3013f0a212ca33a321c04a9ce95bc51c4094d0d4493b75b30774bffe5c188c419b61d8d6c8fdd62e253f603a93848076ce9b9
+        sha512: bcfc8ea1d835afcfbafc9f99c9e897588bf01e219dda936a4bda7e4982ff0b2cc2f21f5e3deadb0e1cf86a9a58295a25f8f82f9fadd2eab520817350a6a862c1
         x-checker-data:
           type: json
           url: https://api.adoptium.net/v3/assets/latest/23/hotspot?os=linux&architecture=x64&image_type=jdk
@@ -34,9 +34,9 @@ modules:
       - type: file
         only-arches:
           - aarch64
-        url: https://github.com/adoptium/temurin23-binaries/releases/download/jdk-23%2B37/OpenJDK23U-jdk_aarch64_linux_hotspot_23_37.tar.gz
+        url: https://github.com/adoptium/temurin23-binaries/releases/download/jdk-23.0.1%2B11/OpenJDK23U-jdk_aarch64_linux_hotspot_23.0.1_11.tar.gz
         dest-filename: java-openjdk.tar.bz2
-        sha512: deaff10db582fddad086bb20617206994af78a0bb828e5b15f2d2443f39bcf2bb37fca573654819f23cff8eedb7d9ca7c9e74badf7224cce0d17bd0ba3c35245
+        sha512: 2bc1d9e3a2741e1359915a2479b6f09a3877a6fbb9e358e01e0e5305585c3b974a7847da08857692bc2a65e9dadc77b443739ad1d963941ded37ea97ab8329a0
         x-checker-data:
           type: json
           url: https://api.adoptium.net/v3/assets/latest/23/hotspot?os=linux&architecture=aarch64&image_type=jdk
@@ -52,7 +52,7 @@ modules:
     config-opts:
       - --with-boot-jdk=/usr/lib/sdk/openjdk/bootstrap-java
       - --with-jvm-variants=server
-      - --with-version-build=37
+      - --with-version-build=11
       - --with-version-pre=
       - --with-version-opt=
       - --with-vendor-version-string=24.9
@@ -85,13 +85,13 @@ modules:
       - ln -s $FLATPAK_DEST/jvm/openjdk-23/bin/* $FLATPAK_DEST/bin
     sources:
       - type: archive
-        url: https://github.com/openjdk/jdk/archive/refs/tags/jdk-23+37.tar.gz
-        sha512: 169ea4baec06601ce060eb69d9854ffb664a4a26ce69f35886bc39fa1fe40e815e83a1b2308237d4b7c4fb428174e4d4494cd167e1d0a7c737af0d87987198a9
+        url: https://github.com/openjdk/jdk23u/archive/refs/tags/jdk-23.0.1+11.tar.gz
+        sha512: 089c4a8d40fc310b85597aae6fae66951b52a3995602a444e43b173acf7289382fb362b51e53c19466983101d9cbb197922592d720b02f95cedb945adaaccb91
         x-checker-data:
           type: json
           url: https://api.adoptium.net/v3/assets/latest/23/hotspot?os=linux&architecture=x64&image_type=jdk
           version-query: .[0].release_name
-          url-query: '"https://github.com/openjdk/jdk/archive/refs/tags/" + $version
+          url-query: '"https://github.com/openjdk/jdk23u/archive/refs/tags/" + $version
             + ".tar.gz"'
           is-main-source: true
       - type: shell
