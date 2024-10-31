@@ -51,3 +51,13 @@ flatpak-builder --user --install --force-clean flatpakbuildir org.freedesktop.Sd
 ### Uninstall
 ```bash
 flatpak uninstall --user org.freedesktop.Sdk.Extension.openjdk
+
+## Plugins
+
+Current valid plugins are as follows:
+* `ant`
+* `gradle`
+* `maven`
+* `openjfx` (JavaFX)
+
+Please note that they are currently installed to `/usr/lib/sdk/openjdk.plugins.<plugin_name>` instead of `/usr/lib/sdk/openjdk/extensions/<plugin_name>`. This will hopefully be fixed in the future.

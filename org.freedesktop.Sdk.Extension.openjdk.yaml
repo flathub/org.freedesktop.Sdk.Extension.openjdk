@@ -11,9 +11,52 @@ cleanup:
 build-options:
   no-debuginfo: true
   strip: true
+  build-args:
+    - --share=network # Needed to build jdt-language-server (lots of maven dependencies)
   prefix: /usr/lib/sdk/openjdk
+  prepend-path: /usr/lib/sdk/openjdk/jvm/openjdk-22/bin:/usr/lib/sdk/openjdk/extensions/maven/bin
+  prepend-ld-library-path: /usr/lib/sdk/openjdk/jvm/openjdk-22/lib
   env:
     V: '1'
+add-extensions:
+  org.freedesktop.Sdk.Extension.openjdk.plugins:
+    directory: extensions
+    subdirectories: true
+    no-autodownload: false # This should change to true sometime
+    autodelete: true
+  org.freedesktop.Sdk.Extension.openjdk.plugins.openjfx:
+    version: '24.08'
+    directory: extensions/openjfx
+    bundle: true
+    autodelete: true
+    no-autodownload: true
+  org.freedesktop.Sdk.Extension.openjdk.plugins.maven:
+    version: '24.08'
+    directory: extensions/maven
+    bundle: true
+    autodelete: true
+    no-autodownload: false
+  org.freedesktop.Sdk.Extension.openjdk.plugins.gradle:
+    version: '24.08'
+    directory: extensions/gradle
+    bundle: true
+    autodelete: true
+    no-autodownload: false
+  org.freedesktop.Sdk.Extension.openjdk.plugins.ant:
+    version: '24.08'
+    directory: extensions/ant
+    bundle: true
+    autodelete: true
+    no-autodownload: false
+  org.freedesktop.Sdk.Extension.openjdk.plugins.jdt-language-server:
+    version: '24.08'
+    directory: extensions/jdt-language-server
+    bundle: true
+    autodelete: true
+    no-autodownload: true
+  
+cleanup-commands:
+  - mkdir --parents /usr/lib/sdk/openjdk/extensions
 modules:
   - name: bootstrap_jdk
     buildsystem: simple
@@ -121,9 +164,9 @@ modules:
           stable-only: true
           url-template: http://archive.apache.org/dist/ant/binaries/apache-ant-$version-bin.tar.gz
     build-commands:
-      - mkdir -p $FLATPAK_DEST/ant
-      - tar xf apache-ant-bin.tar.gz --strip-components=1 --directory=$FLATPAK_DEST/ant
-      - ln -s $FLATPAK_DEST/ant/bin/ant $FLATPAK_DEST/bin
+      - mkdir -p $FLATPAK_DEST/extensions/ant
+      - tar xf apache-ant-bin.tar.gz --strip-components=1 --directory=$FLATPAK_DEST/extensions/ant
+        #- ln -s $FLATPAK_DEST/extensions/ant/bin/ant $FLATPAK_DEST/bin
   - name: maven
     buildsystem: simple
     cleanup:
@@ -140,10 +183,10 @@ modules:
           stable-only: true
           url-template: http://archive.apache.org/dist/maven/maven-3/$version/binaries/apache-maven-$version-bin.tar.gz
     build-commands:
-      - mkdir -p $FLATPAK_DEST/maven
+      - mkdir -p $FLATPAK_DEST/extensions/maven
       - tar xf apache-maven-bin.tar.gz --strip-components=1 --exclude=jansi-native
-        --directory=$FLATPAK_DEST/maven
-      - ln -s $FLATPAK_DEST/maven/bin/mvn $FLATPAK_DEST/maven/bin/mvnDebug $FLATPAK_DEST/bin
+        --directory=$FLATPAK_DEST/extensions/maven
+        #- ln -s $FLATPAK_DEST/extensions/maven/bin/mvn $FLATPAK_DEST/maven/bin/mvnDebug $FLATPAK_DEST/bin
   - name: gradle
     buildsystem: simple
     cleanup:
@@ -161,8 +204,46 @@ modules:
             + "-bin.zip"][0]'
     build-commands:
       - unzip -q gradle-bin.zip -d $FLATPAK_DEST
-      - mv $FLATPAK_DEST/gradle-* $FLATPAK_DEST/gradle
-      - ln -s $FLATPAK_DEST/gradle/bin/gradle $FLATPAK_DEST/bin
+      - mkdir --parents $FLATPAK_DEST/extensions/gradle
+      - mv $FLATPAK_DEST/gradle-*/* $FLATPAK_DEST/extensions/gradle
+        #- ln -s $FLATPAK_DEST/extensions/gradle/bin/gradle $FLATPAK_DEST/bin
+  - name: openjfx
+    buildsystem: simple
+    build-commands:
+      - mkdir -p $FLATPAK_DEST/extensions/openjfx
+      - cp -r ./ $FLATPAK_DEST/extensions/openjfx
+    sources:
+      - type: archive
+        url: https://download2.gluonhq.com/openjfx/18.0.2/openjfx-18.0.2_linux-aarch64_bin-sdk.zip
+        sha256: c5b507b5c6fc1adf8b66591e79c6c34b6afa78b5cb4c2f1c6cb200f8940b402c
+        only-arches: [aarch64]
+        x-checker-data:
+          type: anitya
+          project-id: 176095
+          stable-only: true
+          url-template: https://download2.gluonhq.com/openjfx/$major.$minor.$patch/openjfx-$major.$minor.${patch}_linux-aarch64_bin-sdk.zip
+          versions: {<: 19.0.0, '>=': 18.0.0, '!=': 18.0.2+0}
+      - type: archive
+        url: https://download2.gluonhq.com/openjfx/18.0.2/openjfx-18.0.2_linux-x64_bin-sdk.zip
+        sha256: e9d4b119efc65f5a9ca7f6a4ca74b579eb212f7126f91d5f4033fd90f74d1701
+        only-arches: [x86_64]
+        x-checker-data:
+          type: anitya
+          project-id: 176095
+          stable-only: true
+          url-template: https://download2.gluonhq.com/openjfx/$major.$minor.$patch/openjfx-$major.$minor.${patch}_linux-x64_bin-sdk.zip
+          versions: {<: 19.0.0, '>=': 18.0.0, '!=': 18.0.2+0}
+      - type: archive
+        url: https://download2.gluonhq.com/openjfx/18.0.2/openjfx-18.0.2_linux-arm32_bin-sdk.zip
+        sha256: d8a28a81ac18cd4f4485a502d2ba0f5a31828fe43cfa376e699cddc66aa9429a
+        only-arches: [arm]
+        x-checker-data:
+          type: anitya
+          project-id: 176095
+          stable-only: true
+          url-template: https://download2.gluonhq.com/openjfx/$major.$minor.$patch/openjfx-$major.$minor.${patch}_linux-arm32_bin-sdk.zip
+          versions: {<: 19.0.0, '>=': 18.0.0, '!=': 18.0.2+0}
+
   - name: scripts
     buildsystem: simple
     sources:
@@ -173,25 +254,74 @@ modules:
           - cp -ra conf lib release /app/jre/
           - rm /app/jre/lib/src.zip /app/jre/lib/ct.sym
           - cp -ra bin/{java,keytool,rmiregistry} /app/jre/bin
+          - if [ -d '/usr/lib/sdk/openjdk/extensions/openjfx' ]; then
+          -    cp -ra /usr/lib/sdk/openjdk/extensions/openjfx/lib/ /app/share/openjfx/lib
+          - elif [ -d '/usr/lib/sdk/openjdk.plugins.openjfx' ]; then
+          -    cp -ra /usr/lib/sdk/openjdk.plugins.openjfx/lib/ /app/share/openjfx/lib
+          - fi
         dest-filename: install.sh
       - type: script
         commands:
           - mkdir -p /app/jdk/
           - cd /usr/lib/sdk/openjdk/jvm/openjdk-23
           - cp -ra bin conf include jmods lib release /app/jdk/
+          - for i in "ant" "gradle" "maven" "openjfx"; do
+          - if [ -d "/usr/lib/sdk/openjdk/extensions/${i}" ]; then
+          -    cp -ra "/usr/lib/sdk/openjdk/extensions/${i}/" "/app/jdk/${i}"
+          - elif [ -d "/usr/lib/sdk/openjdk.plugins.${i}" ]; then
+          -    cp -ra "/usr/lib/sdk/openjdk.plugins.${i}/" "/app/jdk/${i}"
+          - fi
+          - done
         dest-filename: installjdk.sh
       - type: script
         commands:
           - export JAVA_HOME=/usr/lib/sdk/openjdk/jvm/openjdk-23
           - export PATH=$PATH:/usr/lib/sdk/openjdk/bin
+          - for i in "ant" "gradle" "maven"; do
+          - if [ -d "/usr/lib/sdk/openjdk/extensions/${i}" ]; then
+          -    export PATH="${PATH}:/usr/lib/sdk/openjdk/extensions/${i}/bin"
+          - elif [ -d "/usr/lib/sdk/openjdk.plugins.${i}" ]; then
+          -    export PATH="${PATH}:/usr/lib/sdk/openjdk.plugins.${i}/bin"
+          - fi
+          - if [ -d '/usr/lib/sdk/openjdk/extensions/openjfx' ]; then
+          -    export JAVAFX_HOME="/usr/lib/sdk/openjdk/extensions/openjfx/lib"
+          - elif [ -d '/usr/lib/sdk/openjdk.plugins.openjfx' ]; then
+          -    export JAVAFX_HOME="/usr/lib/sdk/openjdk.plugins.openjfx/lib"
+          - fi
+          - done
         dest-filename: enable.sh
     build-commands:
       - cp enable.sh install.sh installjdk.sh /usr/lib/sdk/openjdk/
+  - name: jdt-language-server
+    buildsystem: simple
+    build-commands:
+      - source /usr/lib/sdk/openjdk/enable.sh
+      - echo $PATH
+      - mvn clean verify -DskipTests=true
+      - mkdir -p $FLATPAK_DEST/extensions/jdt-language-server
+      - cp -r ./org.eclipse.jdt.ls.product/target/repository/* $FLATPAK_DEST/extensions/jdt-language-server
+    sources:
+      - type: git
+        url: https://github.com/eclipse-jdtls/eclipse.jdt.ls.git
+        commit: 494042b71bb5b23578d58c44969863117b648b75
+        x-checker-data:
+          type: git
+          tag-pattern: "^v([\\d.]+)$"
+
   - name: appdata
     buildsystem: simple
     sources:
       - type: file
-        path: org.freedesktop.Sdk.Extension.openjdk.appdata.xml
+        path: org.freedesktop.Sdk.Extension.openjdk.metainfo.xml
+      - type: file
+        path: org.freedesktop.Sdk.Extension.openjdk.plugins.ant.metainfo.xml
+      - type: file
+        path: org.freedesktop.Sdk.Extension.openjdk.plugins.gradle.metainfo.xml
+      - type: file
+        path: org.freedesktop.Sdk.Extension.openjdk.plugins.maven.metainfo.xml
+      - type: file
+        path: org.freedesktop.Sdk.Extension.openjdk.plugins.openjfx.metainfo.xml
     build-commands:
       - mkdir -p ${FLATPAK_DEST}/share/metainfo
-      - cp org.freedesktop.Sdk.Extension.openjdk.appdata.xml ${FLATPAK_DEST}/share/metainfo
+      - cp org.freedesktop.Sdk.Extension.openjdk.metainfo.xml ${FLATPAK_DEST}/share/metainfo
+      - cp org.freedesktop.Sdk.Extension.openjdk.plugins.openjfx.metainfo.xml ${FLATPAK_DEST}/share/metainfo
