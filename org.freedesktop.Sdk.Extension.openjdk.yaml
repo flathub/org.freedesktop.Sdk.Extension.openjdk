@@ -23,9 +23,9 @@ modules:
       - type: file
         only-arches:
           - x86_64
-        url: https://github.com/adoptium/temurin23-binaries/releases/download/jdk-23.0.1%2B11/OpenJDK23U-jdk_x64_linux_hotspot_23.0.1_11.tar.gz
+        url: https://github.com/adoptium/temurin23-binaries/releases/download/jdk-23.0.2%2B7/OpenJDK23U-jdk_x64_linux_hotspot_23.0.2_7.tar.gz
         dest-filename: java-openjdk.tar.bz2
-        sha512: bcfc8ea1d835afcfbafc9f99c9e897588bf01e219dda936a4bda7e4982ff0b2cc2f21f5e3deadb0e1cf86a9a58295a25f8f82f9fadd2eab520817350a6a862c1
+        sha512: cd3f0f1f5ae97286895d1c243a86193fe31791652bd780d5bfc6062b4421f7111da9fe6ae91071a06aa928626ab710693b3cf6b12a6c9b5f1f9e2148b67c9540
         x-checker-data:
           type: json
           url: https://api.adoptium.net/v3/assets/latest/23/hotspot?os=linux&architecture=x64&image_type=jdk
@@ -34,9 +34,9 @@ modules:
       - type: file
         only-arches:
           - aarch64
-        url: https://github.com/adoptium/temurin23-binaries/releases/download/jdk-23.0.1%2B11/OpenJDK23U-jdk_aarch64_linux_hotspot_23.0.1_11.tar.gz
+        url: https://github.com/adoptium/temurin23-binaries/releases/download/jdk-23.0.2%2B7/OpenJDK23U-jdk_aarch64_linux_hotspot_23.0.2_7.tar.gz
         dest-filename: java-openjdk.tar.bz2
-        sha512: 2bc1d9e3a2741e1359915a2479b6f09a3877a6fbb9e358e01e0e5305585c3b974a7847da08857692bc2a65e9dadc77b443739ad1d963941ded37ea97ab8329a0
+        sha512: 70e0a4f040689587da8757821d1ada3b5dc6ac407a336c39f458f91c960f3cb744bb05eb7a6d71885d5d014034c1f5fd5c56c5f2bdd8497e4d22ad353c95afc7
         x-checker-data:
           type: json
           url: https://api.adoptium.net/v3/assets/latest/23/hotspot?os=linux&architecture=aarch64&image_type=jdk
@@ -85,8 +85,8 @@ modules:
       - ln -s $FLATPAK_DEST/jvm/openjdk-23/bin/* $FLATPAK_DEST/bin
     sources:
       - type: archive
-        url: https://github.com/openjdk/jdk23u/archive/refs/tags/jdk-23.0.1+11.tar.gz
-        sha512: 089c4a8d40fc310b85597aae6fae66951b52a3995602a444e43b173acf7289382fb362b51e53c19466983101d9cbb197922592d720b02f95cedb945adaaccb91
+        url: https://github.com/openjdk/jdk23u/archive/refs/tags/jdk-23.0.2+7.tar.gz
+        sha512: e96abf66cd62c307f71c3a70367a9147e250d84f69c685bfef97f901a5414e1bb10c4702d81238554443b580e654ded41d476643f7649beafa0f3dd98ac4e499
         x-checker-data:
           type: json
           url: https://api.adoptium.net/v3/assets/latest/23/hotspot?os=linux&architecture=x64&image_type=jdk
@@ -150,9 +150,9 @@ modules:
       - '*.bat'
     sources:
       - type: file
-        url: https://services.gradle.org/distributions/gradle-8.10.2-bin.zip
+        url: https://services.gradle.org/distributions/gradle-8.12-bin.zip
         dest-filename: gradle-bin.zip
-        sha512: c48d4b7f4a7b6aa4886848ce913b099b8b7f2494b3d0ca86a21588f6482a185265fffeb0bb6da5f52b8c5f958e589d3a8be9c7fd846790ffbe12be1ad05c9f4f
+        sha512: 96b899728038329d49b4efafc9725136970fe12a7c1b1e353cc40de100d766370da7db15db4cb20286022f3aee02761168183dca18b0bc9a8b32c6aefb079bf8
         x-checker-data:
           type: json
           url: https://api.github.com/repos/gradle/gradle/releases
