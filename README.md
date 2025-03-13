@@ -10,44 +10,65 @@ For the previous LTS version, see the [OpenJDK 17](https://github.com/flathub/or
 
 ## Usage
 
-You can bundle the JRE with your Flatpak application by adding this SDK extension to your Flatpak manifest and calling the install.sh script. For example:
+You can bundle the JRE with your Flatpak application by adding it to `sdk-extensions` in your Flatpak manifest and executing the `/usr/lib/sdk/openjdk/install.sh` script.
 
-```
-{
-  "id" : "org.example.MyApp",
-  "runtime" : "org.freedesktop.Platform",
-  "runtime-version" : "24.08",
-  "sdk" : "org.freedesktop.Sdk",
-  "sdk-extensions" : [
-    "org.freedesktop.Sdk.Extension.openjdk"
-  ],
-  "modules" : [
-    {
-      "name" : "openjdk",
-      "buildsystem" : "simple",
-      "build-commands" : [
-        "/usr/lib/sdk/openjdk/install.sh"
-      ]
-    },
-    {
-      "name" : "myapp",
-      "buildsystem" : "simple",
-      ....
-    }
-  ]
-  ....
-  "finish-args" : [
-    "--env=PATH=/app/jre/bin:/app/bin:/usr/bin"
-  ]
-}
+Simplified example to make the JRE available at runtime:
+
+```yaml
+id: org.example.MyApp
+runtime: org.freedesktop.Platform
+runtime-version: '24.08'
+sdk: org.freedesktop.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.openjdk
+
+modules:
+  - name: openjdk
+    buildsystem: simple
+    build-commands:
+      - /usr/lib/sdk/openjdk/install.sh
+  - name: myapp
+    buildsystem: simple
+    ...
+
+...
+
+finish-args:
+  - --env=PATH=/app/jre/bin:/app/bin:/usr/bin
 ```
 
-## Developement
+Simplified example to make the JRE available at buildtime of module `myapp`:
+
+```yaml
+id: org.example.MyApp
+runtime: org.freedesktop.Platform
+runtime-version: '24.08'
+sdk: org.freedesktop.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.openjdk
+
+modules:
+  - name: openjdk
+    buildsystem: simple
+    build-commands:
+      - /usr/lib/sdk/openjdk/install.sh
+  - name: myapp
+    buildsystem: simple
+    build-options:
+      append-path: /app/jre/bin
+    ...
+
+...
+```
+
+## Development
 
 ### Build and install
+
 ```bash
 flatpak-builder --user --install --force-clean flatpakbuildir org.freedesktop.Sdk.Extension.openjdk.yaml
 ```
 ### Uninstall
+
 ```bash
 flatpak uninstall --user org.freedesktop.Sdk.Extension.openjdk
