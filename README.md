@@ -37,7 +37,7 @@ finish-args:
   - --env=PATH=/app/jre/bin:/app/bin:/usr/bin
 ```
 
-To additionally make the JRE available at buildtime of module `myapp`, set `build-options` accordingly:
+To additionally make the JRE available at buildtime of module `myapp`, set `build-options.append-path` accordingly:
 
 ```yaml
 ...
