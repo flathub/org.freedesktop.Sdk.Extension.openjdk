@@ -37,7 +37,7 @@ finish-args:
   - --env=PATH=/app/jre/bin:/app/bin:/usr/bin
 ```
 
-Simplified example to make the JRE available at buildtime of module `myapp`:
+Simplified example to make the JRE available at runtime as well as at buildtime of module `myapp`:
 
 ```yaml
 id: org.example.MyApp
@@ -48,17 +48,16 @@ sdk-extensions:
   - org.freedesktop.Sdk.Extension.openjdk
 
 modules:
-  - name: openjdk
-    buildsystem: simple
-    build-commands:
-      - /usr/lib/sdk/openjdk/install.sh
   - name: myapp
     buildsystem: simple
     build-options:
-      append-path: /app/jre/bin
+      append-path: /usr/lib/sdk/openjdk/jvm/openjdk-23/bin
     ...
 
 ...
+
+finish-args:
+  - --env=PATH=/app/jre/bin:/app/bin:/usr/bin
 ```
 
 ## Development
