@@ -98,6 +98,9 @@ modules:
         commands:
           - chmod a+x configure
           - sed -i -e "s|@prefix@|$FLATPAK_DEST|" make/autoconf/spec.gmk.template
+      - type: patch
+        paths:
+          - patches/0001-Allow-ccache-to-be-handled-by-GCC-wrappers.patch
   - name: cacerts
     buildsystem: simple
     sources:
