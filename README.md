@@ -23,7 +23,7 @@ You can bundle the JRE with your Flatpak application by adding this SDK extensio
   "modules" : [ {
     "name" : "openjdk",
     "buildsystem" : "simple",
-    "build-commands" : [ "/usr/lib/sdk/openjdk/install.sh" ]
+    "build-commands" : [ "/usr/lib/sdk/openjdk21/install.sh" ]
   }, {
     "name" : "myapp",
     "buildsystem" : "simple",
