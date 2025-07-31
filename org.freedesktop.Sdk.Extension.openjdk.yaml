@@ -134,9 +134,9 @@ modules:
       - '*.cmd'
     sources:
       - type: file
-        url: http://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz
+        url: http://archive.apache.org/dist/maven/maven-3/3.9.11/binaries/apache-maven-3.9.11-bin.tar.gz
         dest-filename: apache-maven-bin.tar.gz
-        sha512: a555254d6b53d267965a3404ecb14e53c3827c09c3b94b5678835887ab404556bfaf78dcfe03ba76fa2508649dca8531c74bca4d5846513522404d48e8c4ac8b
+        sha512: bcfe4fe305c962ace56ac7b5fc7a08b87d5abd8b7e89027ab251069faebee516b0ded8961445d6d91ec1985dfe30f8153268843c89aa392733d1a3ec956c9978
         x-checker-data:
           type: anitya
           project-id: 1894
@@ -153,9 +153,9 @@ modules:
       - '*.bat'
     sources:
       - type: file
-        url: https://services.gradle.org/distributions/gradle-8.12.1-bin.zip
+        url: https://services.gradle.org/distributions/gradle-9.0.0-bin.zip
         dest-filename: gradle-bin.zip
-        sha512: 816d90f7af71f83fbf21b1216c4cdbd64814b109815dfef2a0adced19c598877c781e078ec01f86bfbb830b1dee07483642b5872cdf5a380c0c7da0a8a3a884a
+        sha512: 7558c0bd914a2a4fabb12fe92283e197b8cc308292c7c90fb90dc7e9b880b38168c9406272611be30d63860a9143538ee69309c251471d2ab2dfd2238c5904a6
         x-checker-data:
           type: json
           url: https://api.github.com/repos/gradle/gradle/releases
