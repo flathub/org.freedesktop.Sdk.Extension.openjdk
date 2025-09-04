@@ -1,7 +1,7 @@
 id: org.freedesktop.Sdk.Extension.openjdk
-branch: '24.08'
+branch: '25.08'
 runtime: org.freedesktop.Sdk
-runtime-version: '24.08'
+runtime-version: '25.08'
 build-extension: true
 sdk: org.freedesktop.Sdk
 separate-locales: false
@@ -101,6 +101,7 @@ modules:
       - type: patch
         paths:
           - patches/0001-Allow-ccache-to-be-handled-by-GCC-wrappers.patch
+          - patches/0002-Build-failure-with-glibc-2.42-due-to-uabs-name.patch
   - name: cacerts
     buildsystem: simple
     sources:

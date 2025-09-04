@@ -17,7 +17,7 @@ Simplified example to make the JRE available at runtime:
 ```yaml
 id: org.example.MyApp
 runtime: org.freedesktop.Platform
-runtime-version: '24.08'
+runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.openjdk
