@@ -5,15 +5,18 @@ runtime-version: '25.08'
 build-extension: true
 sdk: org.freedesktop.Sdk
 separate-locales: false
+
 cleanup:
   - /share/info
   - /share/man
+
 build-options:
   no-debuginfo: true
   strip: true
   prefix: /usr/lib/sdk/openjdk
   env:
     V: '1'
+
 modules:
   - name: bootstrap_jdk
     buildsystem: simple
@@ -35,6 +38,7 @@ modules:
     build-commands:
       - mkdir -p $FLATPAK_DEST/bootstrap-java
       - tar xf java-openjdk.tar.bz2 --strip-components=1 --directory=$FLATPAK_DEST/bootstrap-java
+
   - name: java
     buildsystem: autotools
     no-make-install: true
@@ -92,6 +96,7 @@ modules:
         paths:
           - patches/0001-Allow-ccache-to-be-handled-by-GCC-wrappers.patch
           - patches/0002-Build-failure-with-glibc-2.42-due-to-uabs-name.patch
+
   - name: cacerts
     buildsystem: simple
     sources:
@@ -99,6 +104,7 @@ modules:
         path: extract_cacerts.sh
     build-commands:
       - ./extract_cacerts.sh $FLATPAK_DEST/jvm/openjdk-24
+
   - name: ant
     buildsystem: simple
     cleanup:
@@ -118,6 +124,7 @@ modules:
       - mkdir -p $FLATPAK_DEST/ant
       - tar xf apache-ant-bin.tar.gz --strip-components=1 --directory=$FLATPAK_DEST/ant
       - ln -s $FLATPAK_DEST/ant/bin/ant $FLATPAK_DEST/bin
+
   - name: maven
     buildsystem: simple
     cleanup:
@@ -138,6 +145,7 @@ modules:
       - tar xf apache-maven-bin.tar.gz --strip-components=1 --exclude=jansi-native
         --directory=$FLATPAK_DEST/maven
       - ln -s $FLATPAK_DEST/maven/bin/mvn $FLATPAK_DEST/maven/bin/mvnDebug $FLATPAK_DEST/bin
+
   - name: gradle
     buildsystem: simple
     cleanup:
@@ -148,15 +156,15 @@ modules:
         dest-filename: gradle-bin.zip
         sha512: 6df0976acd118427d206c15716d24955e16ac80d362a6c9814764119e826580480b2d508b13e2740dfde81d13528fc46fe2c2c53b3d8b267093f09895a192a1c
         x-checker-data:
-          type: json
-          url: https://api.github.com/repos/gradle/gradle/releases
-          version-query: map(select(.prerelease == false)) | first | .name
-          url-query: '["https://services.gradle.org/distributions/gradle-" + $version
-            + "-bin.zip"][0]'
+          type: anitya
+          project-id: 6088
+          stable-only: true
+          url-template: https://services.gradle.org/distributions/gradle-$version-bin.zip
     build-commands:
       - unzip -q gradle-bin.zip -d $FLATPAK_DEST
       - mv $FLATPAK_DEST/gradle-* $FLATPAK_DEST/gradle
       - ln -s $FLATPAK_DEST/gradle/bin/gradle $FLATPAK_DEST/bin
+
   - name: scripts
     buildsystem: simple
     sources:
@@ -181,6 +189,7 @@ modules:
         dest-filename: enable.sh
     build-commands:
       - cp enable.sh install.sh installjdk.sh /usr/lib/sdk/openjdk/
+
   - name: appdata
     buildsystem: simple
     sources:
