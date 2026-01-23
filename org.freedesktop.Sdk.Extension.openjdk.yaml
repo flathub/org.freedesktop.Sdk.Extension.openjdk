@@ -26,22 +26,12 @@ modules:
         url: https://github.com/adoptium/temurin24-binaries/releases/download/jdk-24.0.2%2B12/OpenJDK24U-jdk_x64_linux_hotspot_24.0.2_12.tar.gz
         dest-filename: java-openjdk.tar.bz2
         sha512: 99b8c6f7125e1cb6cd252805f9db7779edf161c4908f7c523d9c6746aa7487f008ce0900bf5244fecfc3a34702201a1b94fd4aaa86cb3958216c4f872d9e824d
-        x-checker-data:
-          type: json
-          url: https://api.adoptium.net/v3/assets/latest/24/hotspot?os=linux&architecture=x64&image_type=jdk
-          version-query: .[0].version.semver
-          url-query: .[0].binary.package.link
       - type: file
         only-arches:
           - aarch64
         url: https://github.com/adoptium/temurin24-binaries/releases/download/jdk-24.0.2%2B12/OpenJDK24U-jdk_aarch64_linux_hotspot_24.0.2_12.tar.gz
         dest-filename: java-openjdk.tar.bz2
         sha512: 9de3c9aacccbdfb7b3bb1a400fb2ffc78165291816d8cdea92dad0da6756b38abaf21e09fcdba181a8bd227ee4f87779c22b7e58f8d399f02dc2023a6068cec3
-        x-checker-data:
-          type: json
-          url: https://api.adoptium.net/v3/assets/latest/24/hotspot?os=linux&architecture=aarch64&image_type=jdk
-          version-query: .[0].version.semver
-          url-query: .[0].binary.package.link
     build-commands:
       - mkdir -p $FLATPAK_DEST/bootstrap-java
       - tar xf java-openjdk.tar.bz2 --strip-components=1 --directory=$FLATPAK_DEST/bootstrap-java
