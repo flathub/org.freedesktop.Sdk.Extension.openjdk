@@ -4,9 +4,9 @@ This extension contains the OpenJDK 24 Java Runtime Environment (JRE) and Java D
 
 OpenJDK 24 is the current latest version. This is *not* a long-term support (LTS) version and will be periodically updated as new JDKs are released.
 
-For the current LTS version, see the [OpenJDK 21](https://github.com/flathub/org.freedesktop.Sdk.Extension.openjdk21) extension.
+For the current LTS version, see the [OpenJDK 25](https://github.com/flathub/org.freedesktop.Sdk.Extension.openjdk25) extension.
 
-For the previous LTS version, see the [OpenJDK 17](https://github.com/flathub/org.freedesktop.Sdk.Extension.openjdk17) extension.
+For the previous LTS version, see the [OpenJDK 21](https://github.com/flathub/org.freedesktop.Sdk.Extension.openjdk21) extension.
 
 ## Usage
 
