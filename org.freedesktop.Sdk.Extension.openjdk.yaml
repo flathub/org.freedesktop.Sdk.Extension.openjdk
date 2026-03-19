@@ -152,9 +152,9 @@ modules:
       - '*.bat'
     sources:
       - type: file
-        url: https://services.gradle.org/distributions/gradle-9.4.0-bin.zip
+        url: https://services.gradle.org/distributions/gradle-9.4.1-bin.zip
         dest-filename: gradle-bin.zip
-        sha512: c1e74c4ae1fe6c7c6e52fae4e962f8b0159883adbf22f236b44e369b6e93b64ac350305920e9e91a8198ad0487f855cedf426871cbbd2acbc272b1b4ea3085b1
+        sha512: 7aa7b84d6194c3d343c3c60a2c81d9f2aabf8c7ee0cc6b4330e9e4059a0b58762993feb9a5d95efe004aedfc0cf06c8faced4056bd2b8d47bdea4c34ce6f31f8
         x-checker-data:
           type: anitya
           project-id: 6088
