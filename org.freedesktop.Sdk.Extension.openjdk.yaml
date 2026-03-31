@@ -39,70 +39,61 @@ modules:
       - '*'
 
   - name: java
-    buildsystem: autotools
-    no-make-install: true
-    no-parallel-make: true
-    config-opts:
-      - --with-boot-jdk=/usr/lib/sdk/openjdk/bootstrap-java
-      - --with-jvm-variants=server
-      - --with-version-build=12
-      - --with-version-pre=
-      - --with-version-opt=
-      - --with-vendor-version-string=25.8
-      - --with-vendor-name=Flathub
-      - --with-vendor-url=https://flathub.org
-      - --with-vendor-bug-url=https://github.com/flathub/org.freedesktop.Sdk.Extension.openjdk/issues
-      - --with-debug-level=release
-      - --with-native-debug-symbols=internal
-      - --enable-unlimited-crypto
-      - --with-zlib=system
-      - --with-libjpeg=system
-      - --with-giflib=system
-      - --with-libpng=system
-      - --with-lcms=system
-      - --with-harfbuzz=system
-      - --with-stdc++lib=dynamic
-      - --with-extra-cxxflags=-grecord-gcc-switches -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS
-        -fstack-protector-strong -fasynchronous-unwind-tables -fstack-clash-protection
-      - --with-extra-cflags=-grecord-gcc-switches -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS
-        -fstack-protector-strong -fasynchronous-unwind-tables -fstack-clash-protection
-      - --with-extra-ldflags=-Wl,-z,relro -Wl,-z,now -Wl,--as-needed
-      - --disable-javac-server
-      - --disable-warnings-as-errors
-    make-args:
-      - LOG=info
-      - images
-    post-install:
-      - mkdir -p $FLATPAK_DEST/jvm/ $FLATPAK_DEST/bin
-      - cp -Lr build/linux-*-server-release/images/jdk $FLATPAK_DEST/jvm/openjdk-24
-      - ln -s $FLATPAK_DEST/jvm/openjdk-24/bin/* $FLATPAK_DEST/bin
+    buildsystem: simple
+    build-commands:
+      - |
+        bash configure \
+           --with-boot-jdk=/usr/lib/sdk/openjdk/bootstrap-java \
+           --with-jvm-variants=server \
+           --with-version-pre= \
+           --with-version-opt= \
+           --with-vendor-version-string=25.08 \
+           --with-vendor-name=Flathub \
+           --with-vendor-url=https://flathub.org \
+           --with-vendor-bug-url=https://github.com/flathub/org.freedesktop.Sdk.Extension.openjdk/issues \
+           --with-vendor-vm-bug-url=https://github.com/flathub/org.freedesktop.Sdk.Extension.openjdk/issues \
+           --with-debug-level=release \
+           --with-native-debug-symbols=internal \
+           --enable-unlimited-crypto \
+           --with-zlib=system \
+           --with-libjpeg=system \
+           --with-giflib=system \
+           --with-libpng=system \
+           --with-lcms=system \
+           --with-harfbuzz=system \
+           --with-stdc++lib=dynamic \
+           --with-extra-cflags="${CFLAGS}" \
+           --with-extra-cxxflags="${CXXFLAGS}" \
+           --with-extra-ldflags="${LDFLAGS}" \
+           --disable-javac-server \
+           --disable-warnings-as-errors
+      - make -j1 LOG=info images
+      - mkdir -p $FLATPAK_DEST/jvm $FLATPAK_DEST/bin
+      - cp -Lr build/linux-*-server-release/images/jdk $FLATPAK_DEST/jvm/openjdk-26
+      - ln -sr $FLATPAK_DEST/jvm/openjdk-26/bin/* $FLATPAK_DEST/bin
     sources:
       - type: archive
-        url: https://github.com/openjdk/jdk24u/archive/refs/tags/jdk-24.0.2+12.tar.gz
-        sha512: fa3457d69279db37204d829b6637aec541dc76f58574c31b6c7da5cb2758f87d759065cf77e97cded964385887ce9ee859fd81b609efcd490319a774821fe79b
+        url: https://github.com/openjdk/jdk26u/archive/refs/tags/jdk-26+35.tar.gz
+        sha512: ccac636c27de7bcd39ca1dd880f9bfd9c0ebbf94192953be9735ad0f58db226c5d89fdd33dd4da692c7f3caf8f22132d207322110c0cfc8f826926ce33f664a1
         x-checker-data:
-          type: json
-          url: https://api.adoptium.net/v3/assets/latest/24/hotspot?os=linux&architecture=x64&image_type=jdk
-          version-query: .[0].release_name
-          url-query: '"https://github.com/openjdk/jdk24u/archive/refs/tags/" + $version
-            + ".tar.gz"'
           is-main-source: true
-      - type: shell
-        commands:
-          - chmod a+x configure
-          - sed -i -e "s|@prefix@|$FLATPAK_DEST|" make/autoconf/spec.gmk.template
+          type: json
+          url: https://api.adoptium.net/v3/assets/latest/26/hotspot?os=linux&architecture=x64&image_type=jdk
+          version-query: .[0].release_name
+          url-query: '"https://github.com/openjdk/jdk26u/archive/refs/tags/" + $version
+            + ".tar.gz"'
       - type: patch
         paths:
           - patches/0001-Allow-ccache-to-be-handled-by-GCC-wrappers.patch
-          - patches/0002-Build-failure-with-glibc-2.42-due-to-uabs-name.patch
+          - patches/0002-Fix-libjvm.so-linking-error.patch
 
   - name: cacerts
     buildsystem: simple
+    build-commands:
+      - ./extract_cacerts.sh $FLATPAK_DEST/jvm/openjdk-26
     sources:
       - type: file
         path: extract_cacerts.sh
-    build-commands:
-      - ./extract_cacerts.sh $FLATPAK_DEST/jvm/openjdk-24
 
   # Java version requirements for Ant: https://ant.apache.org/faq.html#java-version
   - name: ant
@@ -169,34 +160,33 @@ modules:
 
   - name: scripts
     buildsystem: simple
+    build-commands:
+      - cp enable.sh install.sh installjdk.sh /usr/lib/sdk/openjdk
     sources:
       - type: script
+        dest-filename: install.sh
         commands:
           - mkdir -p /app/jre/bin
-          - cd /usr/lib/sdk/openjdk/jvm/openjdk-24
-          - cp -ra conf lib release /app/jre/
+          - cd /usr/lib/sdk/openjdk/jvm/openjdk-26
+          - cp -ra conf lib release /app/jre
           - rm /app/jre/lib/src.zip /app/jre/lib/ct.sym
           - cp -ra bin/{java,keytool,rmiregistry} /app/jre/bin
-        dest-filename: install.sh
       - type: script
-        commands:
-          - mkdir -p /app/jdk/
-          - cd /usr/lib/sdk/openjdk/jvm/openjdk-24
-          - cp -ra bin conf include jmods lib release /app/jdk/
         dest-filename: installjdk.sh
-      - type: script
         commands:
-          - export JAVA_HOME=/usr/lib/sdk/openjdk/jvm/openjdk-24
-          - export PATH=$PATH:/usr/lib/sdk/openjdk/bin
+          - mkdir -p /app/jdk
+          - cd /usr/lib/sdk/openjdk/jvm/openjdk-26
+          - cp -ra bin conf include jmods lib release /app/jdk
+      - type: script
         dest-filename: enable.sh
-    build-commands:
-      - cp enable.sh install.sh installjdk.sh /usr/lib/sdk/openjdk/
+        commands:
+          - export JAVA_HOME=/usr/lib/sdk/openjdk/jvm/openjdk-26
+          - export PATH=$PATH:/usr/lib/sdk/openjdk/bin
 
   - name: appdata
     buildsystem: simple
+    build-commands:
+      - install -Dm644 -t ${FLATPAK_DEST}/share/metainfo ${FLATPAK_ID}.appdata.xml
     sources:
       - type: file
         path: org.freedesktop.Sdk.Extension.openjdk.appdata.xml
-    build-commands:
-      - mkdir -p ${FLATPAK_DEST}/share/metainfo
-      - cp org.freedesktop.Sdk.Extension.openjdk.appdata.xml ${FLATPAK_DEST}/share/metainfo

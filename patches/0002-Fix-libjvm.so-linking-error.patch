@@ -1,0 +1,33 @@
+From d2a93b26ee6f2e82d1e3df55ebd404a81e3a6b9c Mon Sep 17 00:00:00 2001
+From: guihkx <626206+guihkx@users.noreply.github.com>
+Date: Fri, 3 Apr 2026 02:49:23 -0300
+Subject: [PATCH] Fix libjvm.so linking error
+
+=== Output from failing command(s) repeated here ===
+* For target hotspot_variant-server_libjvm_objs_BUILD_LIBJVM_run_ld:
+/usr/aarch64-unknown-linux-gnu/bin/ld.bfd: /run/build/java/build/linux-aarch64-server-release/hotspot/variant-server/libjvm/objs/zCollectedHeap.o: in function `ZObjectAllocator::~ZObjectAllocator()':
+make/hotspot/src/hotspot/share/gc/z/zObjectAllocator.hpp:35:(.text._ZN5ZHeapD2Ev[_ZN5ZHeapD5Ev]+0x330): undefined reference to `ZDeferredConstructed<ZObjectAllocator::PerAge>::~ZDeferredConstructed()'
+/usr/aarch64-unknown-linux-gnu/bin/ld.bfd: /run/build/java/build/linux-aarch64-server-release/hotspot/variant-server/libjvm/objs/zHeap.o: in function `ZObjectAllocator::~ZObjectAllocator()':
+make/hotspot/src/hotspot/share/gc/z/zObjectAllocator.hpp:35:(.text+0x2a0): undefined reference to `ZDeferredConstructed<ZObjectAllocator::PerAge>::~ZDeferredConstructed()'
+collect2: error: ld returned 1 exit status
+
+* All command lines available in /run/build/java/build/linux-aarch64-server-release/make-support/failure-logs.
+=== End of repeated output ===
+---
+ src/hotspot/share/gc/z/zDeferredConstructed.hpp | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/hotspot/share/gc/z/zDeferredConstructed.hpp b/src/hotspot/share/gc/z/zDeferredConstructed.hpp
+index 16aa4b5e00f..5c605bccb98 100644
+--- a/src/hotspot/share/gc/z/zDeferredConstructed.hpp
++++ b/src/hotspot/share/gc/z/zDeferredConstructed.hpp
+@@ -54,4 +54,6 @@ class ZDeferredConstructed {
+   void initialize(Ts&&... args);
+ };
+ 
++#include "gc/z/zDeferredConstructed.inline.hpp"
++
+ #endif // SHARE_GC_Z_ZDEFERREDCONSTRUCTED_HPP
+-- 
+2.53.0
+
