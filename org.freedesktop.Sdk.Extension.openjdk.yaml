@@ -146,10 +146,13 @@ modules:
       - '*.bat'
       - '*.cmd'
 
+  # Java version requirements for Gradle: https://docs.gradle.org/current/userguide/compatibility.html#java_runtime
   - name: gradle
     buildsystem: simple
-    cleanup:
-      - '*.bat'
+    build-commands:
+      - unzip -q gradle-bin.zip -d $FLATPAK_DEST
+      - mv $FLATPAK_DEST/gradle-* $FLATPAK_DEST/gradle
+      - ln -sr $FLATPAK_DEST/gradle/bin/gradle $FLATPAK_DEST/bin
     sources:
       - type: file
         url: https://services.gradle.org/distributions/gradle-9.4.1-bin.zip
@@ -160,10 +163,8 @@ modules:
           project-id: 6088
           stable-only: true
           url-template: https://services.gradle.org/distributions/gradle-$version-bin.zip
-    build-commands:
-      - unzip -q gradle-bin.zip -d $FLATPAK_DEST
-      - mv $FLATPAK_DEST/gradle-* $FLATPAK_DEST/gradle
-      - ln -s $FLATPAK_DEST/gradle/bin/gradle $FLATPAK_DEST/bin
+    cleanup:
+      - '*.bat'
 
   - name: scripts
     buildsystem: simple
