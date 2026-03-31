@@ -103,11 +103,13 @@ modules:
     build-commands:
       - ./extract_cacerts.sh $FLATPAK_DEST/jvm/openjdk-24
 
+  # Java version requirements for Ant: https://ant.apache.org/faq.html#java-version
   - name: ant
     buildsystem: simple
-    cleanup:
-      - '*.bat'
-      - '*.cmd'
+    build-commands:
+      - mkdir -p $FLATPAK_DEST/ant
+      - tar xf apache-ant-bin.tar.gz --strip-components=1 --directory=$FLATPAK_DEST/ant
+      - ln -sr $FLATPAK_DEST/ant/bin/ant $FLATPAK_DEST/bin
     sources:
       - type: file
         url: http://archive.apache.org/dist/ant/binaries/apache-ant-1.10.16-bin.tar.gz
@@ -118,10 +120,9 @@ modules:
           project-id: 50
           stable-only: true
           url-template: http://archive.apache.org/dist/ant/binaries/apache-ant-$version-bin.tar.gz
-    build-commands:
-      - mkdir -p $FLATPAK_DEST/ant
-      - tar xf apache-ant-bin.tar.gz --strip-components=1 --directory=$FLATPAK_DEST/ant
-      - ln -s $FLATPAK_DEST/ant/bin/ant $FLATPAK_DEST/bin
+    cleanup:
+      - '*.bat'
+      - '*.cmd'
 
   - name: maven
     buildsystem: simple
