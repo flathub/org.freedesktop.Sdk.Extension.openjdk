@@ -16,26 +16,27 @@ build-options:
   prefix: /usr/lib/sdk/openjdk
 
 modules:
+  # Boot JDK requirements: https://htmlpreview.github.io/?https://raw.githubusercontent.com/openjdk/jdk/master/doc/building.html#boot-jdk-requirements
   - name: bootstrap_jdk
     buildsystem: simple
-    cleanup:
-      - '*'
+    build-commands:
+      - mkdir -p $FLATPAK_DEST/bootstrap-java
+      - tar xf java-openjdk.tar.bz2 --strip-components=1 --directory=$FLATPAK_DEST/bootstrap-java
     sources:
       - type: file
         only-arches:
           - x86_64
-        url: https://github.com/adoptium/temurin24-binaries/releases/download/jdk-24.0.2%2B12/OpenJDK24U-jdk_x64_linux_hotspot_24.0.2_12.tar.gz
+        url: https://github.com/adoptium/temurin26-binaries/releases/download/jdk-26%2B35/OpenJDK26U-jdk_x64_linux_hotspot_26_35.tar.gz
         dest-filename: java-openjdk.tar.bz2
-        sha512: 99b8c6f7125e1cb6cd252805f9db7779edf161c4908f7c523d9c6746aa7487f008ce0900bf5244fecfc3a34702201a1b94fd4aaa86cb3958216c4f872d9e824d
+        sha512: eb03f3360f1fef6832682431f447204085afded2faa7a751f13748518a84413d6739b384697849e90b237a03ef3a35da8b640490cc728adaffedc46b3057fbfe
       - type: file
         only-arches:
           - aarch64
-        url: https://github.com/adoptium/temurin24-binaries/releases/download/jdk-24.0.2%2B12/OpenJDK24U-jdk_aarch64_linux_hotspot_24.0.2_12.tar.gz
+        url: https://github.com/adoptium/temurin26-binaries/releases/download/jdk-26%2B35/OpenJDK26U-jdk_aarch64_linux_hotspot_26_35.tar.gz
         dest-filename: java-openjdk.tar.bz2
-        sha512: 9de3c9aacccbdfb7b3bb1a400fb2ffc78165291816d8cdea92dad0da6756b38abaf21e09fcdba181a8bd227ee4f87779c22b7e58f8d399f02dc2023a6068cec3
-    build-commands:
-      - mkdir -p $FLATPAK_DEST/bootstrap-java
-      - tar xf java-openjdk.tar.bz2 --strip-components=1 --directory=$FLATPAK_DEST/bootstrap-java
+        sha512: 5937a0a4132743c5097d3db120e9175a40e882ea992f063c074f4c5372406b7960406aea094b778a5178e9267662b83b6066585edf9e4077425892c541d5ed26
+    cleanup:
+      - '*'
 
   - name: java
     buildsystem: autotools
