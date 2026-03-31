@@ -14,8 +14,6 @@ build-options:
   no-debuginfo: true
   strip: true
   prefix: /usr/lib/sdk/openjdk
-  env:
-    V: '1'
 
 modules:
   - name: bootstrap_jdk
