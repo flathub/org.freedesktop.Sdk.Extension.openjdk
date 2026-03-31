@@ -124,11 +124,14 @@ modules:
       - '*.bat'
       - '*.cmd'
 
+  # Java version requirements for Maven: https://maven.apache.org/docs/history.html
   - name: maven
     buildsystem: simple
-    cleanup:
-      - '*.bat'
-      - '*.cmd'
+    build-commands:
+      - mkdir -p $FLATPAK_DEST/maven
+      - tar xf apache-maven-bin.tar.gz --strip-components=1 --exclude=jansi-native
+        --directory=$FLATPAK_DEST/maven
+      - ln -sr $FLATPAK_DEST/maven/bin/mvn $FLATPAK_DEST/maven/bin/mvnDebug $FLATPAK_DEST/bin
     sources:
       - type: file
         url: http://archive.apache.org/dist/maven/maven-3/3.9.14/binaries/apache-maven-3.9.14-bin.tar.gz
@@ -139,11 +142,9 @@ modules:
           project-id: 1894
           stable-only: true
           url-template: http://archive.apache.org/dist/maven/maven-3/$version/binaries/apache-maven-$version-bin.tar.gz
-    build-commands:
-      - mkdir -p $FLATPAK_DEST/maven
-      - tar xf apache-maven-bin.tar.gz --strip-components=1 --exclude=jansi-native
-        --directory=$FLATPAK_DEST/maven
-      - ln -s $FLATPAK_DEST/maven/bin/mvn $FLATPAK_DEST/maven/bin/mvnDebug $FLATPAK_DEST/bin
+    cleanup:
+      - '*.bat'
+      - '*.cmd'
 
   - name: gradle
     buildsystem: simple
