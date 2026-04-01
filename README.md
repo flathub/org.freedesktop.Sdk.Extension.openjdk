@@ -1,8 +1,8 @@
-# SDK Extension for OpenJDK 24
+# SDK Extension for OpenJDK 26
 
-This extension contains the OpenJDK 24 Java Runtime Environment (JRE) and Java Developement Kit (JDK).
+This extension contains the OpenJDK 26 Java Runtime Environment (JRE) and Java Developement Kit (JDK).
 
-OpenJDK 24 is the current latest version. This is *not* a long-term support (LTS) version and will be periodically updated as new JDKs are released.
+OpenJDK 26 is the current latest version. This is *not* a long-term support (LTS) version and will be periodically updated as new JDKs are released.
 
 For the current LTS version, see the [OpenJDK 25](https://github.com/flathub/org.freedesktop.Sdk.Extension.openjdk25) extension.
 
@@ -47,7 +47,7 @@ modules:
   - name: myapp
     buildsystem: simple
     build-options:
-      append-path: /usr/lib/sdk/openjdk/jvm/openjdk-24/bin
+      append-path: /usr/lib/sdk/openjdk/jvm/openjdk-26/bin
     ...
 ```
 
