@@ -104,9 +104,9 @@ modules:
       - ln -sr $FLATPAK_DEST/ant/bin/ant $FLATPAK_DEST/bin
     sources:
       - type: file
-        url: http://archive.apache.org/dist/ant/binaries/apache-ant-1.10.16-bin.tar.gz
+        url: http://archive.apache.org/dist/ant/binaries/apache-ant-1.10.17-bin.tar.gz
         dest-filename: apache-ant-bin.tar.gz
-        sha512: b711c0a88751efdbcc33d55b1c054b741e5e75c603c1a1b7ed39bb62f0b1fa562cd2e6232d9fb5dd8ab165169fde35a4e4be567925ab9aa84bc668ac54077be7
+        sha512: a96ca6455ec9af5e702df7d1ed5a2ec1cfb381eac3e9a767ecb6be1706e826941045e8fd7ca663ba101bc47bfa18351f540dd27e9e7af57908ac78e65268eee7
         x-checker-data:
           type: anitya
           project-id: 50
