@@ -73,8 +73,8 @@ modules:
       - ln -sr $FLATPAK_DEST/jvm/openjdk-26/bin/* $FLATPAK_DEST/bin
     sources:
       - type: archive
-        url: https://github.com/openjdk/jdk26u/archive/refs/tags/jdk-26.0.1+8.tar.gz
-        sha512: 36ad0081e78a8f5ce88bffb7f4052710444bf319a4c3f27ebbbc1ce7ead216fb226f2607cc5616ed816020fd74f3d0f6a9f6723b5f96174aad1ab6b3f256bfe4
+        url: https://github.com/openjdk/jdk26u/archive/refs/tags/jdk-26.0.2+10.tar.gz
+        sha512: 43d00324d1437115d6f1dcbbbd649bf28fed06505dbc2bf9f44883464b579015f900221619b7d66f66e45c6f2a54266232e1fdb3781ee4fdda27adfa06703d12
         x-checker-data:
           is-main-source: true
           type: json
