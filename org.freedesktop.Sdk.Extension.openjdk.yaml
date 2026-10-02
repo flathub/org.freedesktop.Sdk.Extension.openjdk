@@ -121,7 +121,7 @@ modules:
     buildsystem: simple
     build-commands:
       - mkdir -p $FLATPAK_DEST/maven
-      - tar xf apache-maven-bin.tar.gz --strip-components=1 --exclude=jansi-native
+      - tar xf apache-maven-bin.tar.gz --strip-components=1 --exclude=jline-native
         --directory=$FLATPAK_DEST/maven
       - ln -sr $FLATPAK_DEST/maven/bin/mvn $FLATPAK_DEST/maven/bin/mvnDebug $FLATPAK_DEST/bin
     sources:
