@@ -126,9 +126,9 @@ modules:
       - ln -sr $FLATPAK_DEST/maven/bin/mvn $FLATPAK_DEST/maven/bin/mvnDebug $FLATPAK_DEST/bin
     sources:
       - type: file
-        url: http://archive.apache.org/dist/maven/maven-3/3.9.16/binaries/apache-maven-3.9.16-bin.tar.gz
+        url: http://archive.apache.org/dist/maven/maven-3/3.10.0/binaries/apache-maven-3.10.0-bin.tar.gz
         dest-filename: apache-maven-bin.tar.gz
-        sha512: 831a8591fe20c8243b1dbe7d71e3244f31d1665b0804b2e825e38cbbe5ce0cafb8338851f90780735568773e0a6cd07bbec107cda0b896b008b861075358b6f6
+        sha512: 908b1501bfb420bf7c8affb855534a9c407fd6099367bfb9f2f2dcb8e9799102bffb84518cde74c679bd76870247c6528683abdd620581bffa90f95d92d175aa
         x-checker-data:
           type: anitya
           project-id: 1894
