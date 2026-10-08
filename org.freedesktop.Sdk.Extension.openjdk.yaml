@@ -147,9 +147,9 @@ modules:
       - ln -sr $FLATPAK_DEST/gradle/bin/gradle $FLATPAK_DEST/bin
     sources:
       - type: file
-        url: https://services.gradle.org/distributions/gradle-9.8.0-bin.zip
+        url: https://services.gradle.org/distributions/gradle-9.8.1-bin.zip
         dest-filename: gradle-bin.zip
-        sha512: 36244376500051506252ee5d57e686169c6812cd393e9c04838528655fbfdd6f0d1d15ea5a626c305f95b5a22f809d4d74f525cc097a0f2ff763e07d3095eeb1
+        sha512: f11f3fdb96f03fdf3b4d463048a73daddc6afd8c53229fb3d2684a0e88c4714b4453386034b156392aef2d84b0aa9429abd3970d587983e307518acef2015472
         x-checker-data:
           type: anitya
           project-id: 6088
