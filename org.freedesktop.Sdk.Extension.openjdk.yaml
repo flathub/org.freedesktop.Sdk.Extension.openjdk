@@ -112,9 +112,9 @@ modules:
       - '*.cmd'
     sources:
       - type: file
-        url: http://archive.apache.org/dist/ant/binaries/apache-ant-1.10.14-bin.tar.gz
+        url: http://archive.apache.org/dist/ant/binaries/apache-ant-1.10.18-bin.tar.gz
         dest-filename: apache-ant-bin.tar.gz
-        sha512: 4e74b382dd8271f9eac9fef69ba94751fb8a8356dbd995c4d642f2dad33de77bd37d4001d6c8f4f0ef6789529754968f0c1b6376668033c8904c6ec84543332a
+        sha512: c510d744876d8da48dabc9495b023b6ec5284a0f18b40ee50d98ce099e791ca5c73e3cd4c80d3c90d3efc03f9620be43aad0a373ed47198284f7e3373e0db2c3
         x-checker-data:
           type: anitya
           project-id: 50
@@ -131,9 +131,9 @@ modules:
       - '*.cmd'
     sources:
       - type: file
-        url: http://archive.apache.org/dist/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bin.tar.gz
+        url: http://archive.apache.org/dist/maven/maven-3/3.10.0/binaries/apache-maven-3.10.0-bin.tar.gz
         dest-filename: apache-maven-bin.tar.gz
-        sha512: deaa39e16b2cf20f8cd7d232a1306344f04020e1f0fb28d35492606f647a60fe729cc40d3cba33e093a17aed41bd161fe1240556d0f1b80e773abd408686217e
+        sha512: 908b1501bfb420bf7c8affb855534a9c407fd6099367bfb9f2f2dcb8e9799102bffb84518cde74c679bd76870247c6528683abdd620581bffa90f95d92d175aa
         x-checker-data:
           type: anitya
           project-id: 1894
@@ -150,9 +150,9 @@ modules:
       - '*.bat'
     sources:
       - type: file
-        url: https://services.gradle.org/distributions/gradle-8.3-bin.zip
+        url: https://services.gradle.org/distributions/gradle-9.9.0-bin.zip
         dest-filename: gradle-bin.zip
-        sha512: 9cb57a7cc61d6f774ad2e1807a66acf7237ade3f8c50b7c10d792786c97e8be69f669c3d09a28223930b24cabb421596f0b448db4609c0427cbe43ca206de2c8
+        sha512: e4efe688744922953ec599a1e3f675faefd9a16f47190185492421b36a21858bf67c8cd4c71c13351afedf6c19c548fac4e98b5986e538d834be5f454f477341
         x-checker-data:
           type: json
           url: https://api.github.com/repos/gradle/gradle/releases
