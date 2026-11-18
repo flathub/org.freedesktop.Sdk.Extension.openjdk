@@ -73,8 +73,8 @@ modules:
       - ln -sr $FLATPAK_DEST/jvm/openjdk-27/bin/* $FLATPAK_DEST/bin
     sources:
       - type: archive
-        url: https://github.com/openjdk/jdk27u/archive/refs/tags/jdk-27.0.1.0.2+1.tar.gz
-        sha512: f56a46d7900774dfe47b82c0414ab8cf347097a8b2c0c3799cb0dd725d4374bf3cc5c31038520539ab5f4dc450d9d37410476ad455721b38931bafc13b75fef9
+        url: https://github.com/openjdk/jdk27u/archive/refs/tags/jdk-27.0.1.1+4.tar.gz
+        sha512: c42fe5a6ef3b22866a6fb438d715f37da71fc5c7d1ef8871c559c92b9ab6c2978efd1fd32c271f4603f257e0b3913d636fc8b18bd0e1c396bc11725e561b12dd
         x-checker-data:
           is-main-source: true
           type: json
